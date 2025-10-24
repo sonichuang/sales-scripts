@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>销售话术一键复制工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .script-section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .script-section h3 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: #333;
+        }
+        .copy-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+        .text-to-copy {
+            white-space: pre-wrap; /* 保持换行和空格 */
+            font-size: 14px;
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #fff;
+            border: 1px dashed #ccc;
+        }
+        .copy-button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+        .copy-message {
+            margin-left: 10px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>销售话术一键复制</h1>
+
+    <div class="script-section">
+        <h3>给采购/运营/销售管理相关头衔</h3>
+
+        <div class="copy-block">
+            <pre class="text-to-copy" id="script1_1">Hi there, we keep LA stock of soup bowls, take-out & deli containers, MFPP clamshells, disposable gloves, and bamboo chopsticks.
+Are you handling purchasing at {{Company}} or could you point me to the right contact for take-out packaging?</pre>
+            <button class="copy-button" data-target="script1_1">一键复制</button>
+            <span class="copy-message" data-msg-for="script1_1"></span>
+        </div>
+
+        <div class="copy-block">
+            <pre class="text-to-copy" id="script1_2">Hi there, we keep LA stock of soup bowls, take-out & deli containers, MFPP clamshells, disposable gloves, and bamboo chopsticks.
+Are you the right contact for purchasing at {{Company}}, or could you point me to the buyer?</pre>
+            <button class="copy-button" data-target="script1_2">一键复制</button>
+            <span class="copy-message" data-msg-for="script1_2"></span>
+        </div>
+
+        <div class="copy-block">
+            <pre class="text-to-copy" id="script1_3">Hi there, we keep LA stock of soup bowls, take-out & deli containers, MFPP clamshells, disposable gloves, and bamboo chopsticks with quick dispatch.
+Are you involved in purchasing or category management at {{Company}}?</pre>
+            <button class="copy-button" data-target="script1_3">一键复制</button>
+            <span class="copy-message" data-msg-for="script1_3"></span>
+        </div>
+    </div>
+
+    <div class="script-section">
+        <h3>给确定的负责人</h3>
+
+        <div class="copy-block">
+            <pre class="text-to-copy" id="script2_1">Hi  — Miles from NABAFOOD (Ranye Group), LA. We stock PP food containers & MFPP clamshells with LA stock and fast replenishment.
+May I send our catalog and pricing? We ship nationwide. Thanks!</pre>
+            <button class="copy-button" data-target="script2_1">一键复制</button>
+            <span class="copy-message" data-msg-for="script2_1"></span>
+        </div>
+    </div>
+
+    <div class="script-section">
+        <h3>待定</h3>
+
+        <div class="copy-block">
+            <pre class="text-to-copy" id="script2_2">待定</pre>
+            <button class="copy-button" data-target="script2_2">一键复制</button>
+            <span class="copy-message" data-msg-for="script2_2"></span>
+        </div>
+
+                <div class="copy-block">
+            <pre class="text-to-copy" id="script2_3">待定</pre>
+            <button class="copy-button" data-target="script2_3">一键复制</button>
+            <span class="copy-message" data-msg-for="script2_3"></span>
+        </div>
+    </div>
+
+    <script>
+        const copyButtons = document.querySelectorAll('.copy-button');
+
+        copyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.dataset.target;
+                const textElement = document.getElementById(targetId);
+                // 使用 textContent 确保获取纯文本内容
+                const textToCopy = textElement.textContent; 
+                const messageSpan = document.querySelector(`.copy-message[data-msg-for="${targetId}"]`);
+                
+                // 检查浏览器是否支持 Clipboard API
+                if (!navigator.clipboard) {
+                    messageSpan.textContent = '❌ 浏览器不支持复制功能。';
+                    return;
+                }
+
+                // 执行复制操作
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        // 复制成功
+                        messageSpan.textContent = '✅ 已成功复制！';
+                        this.textContent = '已复制！';
+
+                        // 2秒后恢复按钮文本和提示信息
+                        setTimeout(() => {
+                            this.textContent = '一键复制';
+                            messageSpan.textContent = '';
+                        }, 2000); 
+                    })
+                    .catch(err => {
+                        // 复制失败
+                        console.error('无法复制文本：', err);
+                        messageSpan.textContent = '❌ 复制失败，请手动复制。';
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>
