@@ -159,4 +159,113 @@
             <p style="color: #666; font-style: italic;">使用场景：已确认是负责人，或需要发起报价请求。</p>
 
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_1">Hi — Miles from NABAFOOD (LA). We stock Soup Bowls, MFPP
+                <pre class="text-to-copy" id="script2_1">Hi — Miles from NABAFOOD (LA). We stock Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks in LA for fast replenishment (MOQ $1000). May I send our catalog and pricing? We ship nationwide. Thanks!</pre>
+                <button class="copy-button" data-target="script2_1" data-original-text="复制 - 简短推目录/报价">复制 - 简短推目录/报价</button>
+                <span class="copy-message" data-msg-for="script2_1"></span>
+            </div>
+
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script2_2">Hi, thanks for connecting. This is Miles from NABAFOOD (LA). We stock Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks in LA. MOQ $1000. May I share the catalog? Who is the best contact for purchasing?</pre>
+                <button class="copy-button" data-target="script2_2" data-original-text="复制 - 推目录/再确认采购人">复制 - 推目录/再确认采购人</button>
+                <span class="copy-message" data-msg-for="script2_2"></span>
+            </div>
+            
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script2_3">Hi, May I know how to address you? — Miles from NABAFOOD (LA). We keep LA stock (Soup Bowls, MFPP Clamshells, etc.) MOQ $1000 in CA. May I send our catalog and pricing? Which city/state are you based in?</pre>
+                <button class="copy-button" data-target="script2_3" data-original-text="复制 - 针对Whatsapp/未接来电">复制 - 针对Whatsapp/未接来电</button>
+                <span class="copy-message" data-msg-for="script2_3"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+             <h3 id="toc-scene3">场景 3: 首次接触 (针对团队/特殊渠道)</h3>
+             <p style="color: #666; font-style: italic;">使用场景：针对团队群发、首次发送详细报价文件，或回复定制需求。</p>
+             
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script3_5">I am sorry, we supply ready stock from LA warehouse only, no customization. Inventory: Soup bowls, MFPP clamshells, Gloves, Chopsticks. (Take-out containers: Preorder, 45-day lead to CA/TX). Which city/state are you based in? I can send our catalog and pricing.</pre>
+                <button class="copy-button" data-target="script3_5" data-original-text="复制 - 回复不可定制/列出现货">复制 - 回复不可定制/列出现货</button>
+                <span class="copy-message" data-msg-for="script3_5"></span>
+            </div>
+            
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script3_1">Hi team — Miles from NABAFOOD (LA). We keep 𝗟𝗔 stock of Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks (MOQ $1000 in CA). Recyclable, food-grade. May I share the catalog? Who is the best contact for purchasing?</pre>
+                <button class="copy-button" data-target="script3_1" data-original-text="复制 - 针对团队/问采购联系人">复制 - 针对团队/问采购联系人</button>
+                <span class="copy-message" data-msg-for="script3_1"></span>
+            </div>
+
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script3_2">Hi! I’ve attached our catalog and price list. Pricing: min 1 pallet/SKU, whole-pallet only. We supply LA stock only, no customization. If email is more convenient, what’s the best address?</pre>
+                <button class="copy-button" data-target="script3_2" data-original-text="复制 - 发目录/报价(含详细条款)">复制 - 发目录/报价(含详细条款)</button>
+                <span class="copy-message" data-msg-for="script3_2"></span>
+            </div>
+        </div>
+        
+        <div class="script-section">
+            <h3 id="toc-scene4">场景 4: 目录/报价后跟进</h3>
+            <p style="color: #666; font-style: italic;">使用场景：已发送文件，需要推动下一步或收集信息。</p>
+            
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script3_3">Just checking if you had a chance to review our price. If you’re interested, and share your company business license, I can send you samples.</pre>
+                <button class="copy-button" data-target="script3_3" data-original-text="复制 - 跟进报价/提供样品">复制 - 跟进报价/提供样品</button>
+                <span class="copy-message" data-msg-for="script3_3"></span>
+            </div>
+
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script3_4">Hi — did you get our catalog? Share your city/state and I'll send pricing for best-sellers.
+
+Notes: 
+• Min 1 pallet/SKU; whole-pallet only. 
+• CA MOQ US$1,000 (Free delivery for $3,000+).
+• Outside CA MOQ US$3,000.
+• Terms: Payment in advance; freight collect (EXW Commerce, CA).</pre>
+                <button class="copy-button" data-target="script3_4" data-original-text="复制 - 跟进目录/索取区域/条款">复制 - 跟进目录/索取区域/条款</button>
+                <span class="copy-message" data-msg-for="script3_4"></span>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        const copyButtons = document.querySelectorAll('.copy-button');
+
+        copyButtons.forEach(button => {
+            // 获取原始按钮文本 (用于复制后恢复)
+            const originalText = button.getAttribute('data-original-text');
+
+            button.addEventListener('click', function() {
+                const targetId = this.dataset.target;
+                const textElement = document.getElementById(targetId);
+                // 使用 textContent 确保获取纯文本内容
+                const textToCopy = textElement.textContent; 
+                const messageSpan = document.querySelector(`.copy-message[data-msg-for="${targetId}"]`);
+                
+                if (!navigator.clipboard) {
+                    messageSpan.textContent = '❌ 浏览器不支持复制功能。';
+                    return;
+                }
+
+                // 执行复制操作
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        // 复制成功
+                        messageSpan.textContent = '✅ 已成功复制！';
+                        this.textContent = '已复制！';
+
+                        // 2秒后恢复按钮文本和提示信息
+                        setTimeout(() => {
+                            // 恢复原始按钮文本
+                            this.textContent = originalText; 
+                            messageSpan.textContent = '';
+                        }, 2000); 
+                    })
+                    .catch(err => {
+                        // 复制失败
+                        console.error('无法复制文本：', err);
+                        messageSpan.textContent = '❌ 复制失败，请手动复制。';
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>
