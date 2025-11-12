@@ -93,7 +93,7 @@
         }
 
 
-        /* --- 通用样式 (保持不变) --- */
+        /* --- 通用样式 (已优化) --- */
         h1 {
             color: #007bff;
             border-bottom: 3px solid #007bff;
@@ -104,25 +104,32 @@
             margin-top: 0;
             color: #333;
         }
+        
+        /* 优化：导航栏更紧凑 */
         #toc a {
             display: block; 
-            margin-bottom: 8px;
+            margin-bottom: 6px; /* 减小间距 (原 8px) */
             color: #0056b3;
             text-decoration: none;
             font-weight: bold;
-            padding: 5px 0;
+            font-size: 14px; /* 减小字体 (原 16px) */
+            padding: 4px 0; /* 减小内边距 (原 5px 0) */
             border-bottom: 1px dotted #cceeff;
         }
         #toc a:hover {
             color: #007bff;
             text-decoration: underline;
         }
+        
+        /* 优化：扁平化 + 紧凑 */
         .script-section {
             background-color: #ffffff;
             padding: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* 减小间距 (原 30px) */
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* 优化：移除阴影，改用边框 */
+            border: 1px solid #e0e0e0;
+            /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
         }
         .script-section h3 {
             border-bottom: 2px solid #007bff;
@@ -130,20 +137,24 @@
             margin-top: 0;
             color: #333;
         }
+        
+        /* 优化：紧凑 */
         .copy-block {
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 12px; /* 减小间距 (原 20px) */
+            padding: 12px; /* 减小内边距 (原 15px) */
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             background-color: #f9f9f9;
         }
+        
+        /* 优化：紧凑 */
         .text-to-copy {
             white-space: pre-wrap;
             font-size: 14px;
             color: #555;
             margin-top: 0;
-            margin-bottom: 10px;
-            padding: 5px;
+            margin-bottom: 8px; /* 减小间距 (原 10px) */
+            padding: 8px;
             background-color: #fff;
             border: 1px dashed #ccc;
         }
@@ -182,14 +193,15 @@
             <a href="#toc-scene5">场景 5: 后续跟进 (已发资料后)</a>
             <a href="#toc-scene6">场景 6: 回复价格异议 (Price Objection)</a>
             <a href="#toc-scene7">场景 7: 回复业务/条款 (Business Q&A)</a>
-            <a href="#toc-scene8">场景 8: 特殊情景回复 (Situational)</a>
-            <a href="#toc-scene9">场景 9: 感谢回复 (Thank You)</a>
-            <a href="#toc-scene10">场景 10: 希望得到回复 (Seeking Reply)</a>
-            <a href="#toc-scene11">场景 11: 结尾祝福 (Closings)</a>
-            <a href="#toc-scene12">场景 12: 通用/联系方式</a>
-            <a href="#toc-scene13">场景 13: 询问月销量 (Asking Volume)</a>
-            <a href="#toc-scene14">场景 14: 回复不用客气 (You're Welcome)</a>
-            <a href="#toc-scene15">场景 15: 重新激活 (发送新目录)</a>
+            <a href="#toc-scene8">场景 8: 交易条款 (Trading Terms)</a>
+            <a href="#toc-scene9">场景 9: 特殊情景回复 (Situational)</a>
+            <a href="#toc-scene10">场景 10: 感谢回复 (Thank You)</a>
+            <a href="#toc-scene11">场景 11: 希望得到回复 (Seeking Reply)</a>
+            <a href="#toc-scene12">场景 12: 结尾祝福 (Closings)</a>
+            <a href="#toc-scene13">场景 13: 通用/联系方式</a>
+            <a href="#toc-scene14">场景 14: 询问月销量 (Asking Volume)</a>
+            <a href="#toc-scene15">场景 15: 回复不用客气 (You're Welcome)</a>
+            <a href="#toc-scene16">场景 16: 重新激活 (发送新目录)</a>
         </div>
     </div>
 
@@ -368,7 +380,57 @@ Thanks again, and have a great day!</pre>
         </div>
         
         <div class="script-section">
-             <h3 id="toc-scene8">场景 8: 特殊情景回复 (Situational)</h3>
+            <h3 id="toc-scene8">场景 8: 交易条款 (Trading Terms)</h3>
+            <p style="color: #666; font-style: italic;">使用场景: 用于发送详细的、逐条的交易条款。</p>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_1_term">Pricing: USD; EXW Commerce, CA.</pre>
+                <button class="copy-button" data-target="script8_1_term" data-original-text="复制 - 条款 (价格)">复制 - 条款 (价格)</button>
+                <span class="copy-message" data-msg-for="script8_1_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_2_term">MOQ/Ordering: CA ≥ $1,000; out-of-state ≥ $3,000. Each SKU ≥ 1 pallet (full pallets only). Trial $1,000–$2,000.</pre>
+                <button class="copy-button" data-target="script8_2_term" data-original-text="复制 - 条款 (MOQ)">复制 - 条款 (MOQ)</button>
+                <span class="copy-message" data-msg-for="script8_2_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_3_term">Delivery: CA orders ≥ $3,000 — free to warehouse (dock/unload). Other states: Freight Collect.</pre>
+                <button class="copy-button" data-target="script8_3_term" data-original-text="复制 - 条款 (配送)">复制 - 条款 (配送)</button>
+                <span class="copy-message" data-msg-for="script8_3_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_4_term">Lead Time: LA stock ships fast; non-stock ≈ 45 days into LA. CA→TX: DDP quotes available.</pre>
+                <button class="copy-button" data-target="script8_4_term" data-original-text="复制 - 条款 (交付周期)">复制 - 条款 (交付周期)</button>
+                <span class="copy-message" data-msg-for="script8_4_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_5_term">Payment: Stock prepaid. Non-stock: 30% deposit; remaining 70% due before container loading at our China/Malaysia factory.</pre>
+                <button class="copy-button" data-target="script8_5_term" data-original-text="复制 - 条款 (付款)">复制 - 条款 (付款)</button>
+                <span class="copy-message" data-msg-for="script8_5_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_6_term">Samples: Free (business license required). Build-to-sample MOQ ≥ 120 cartons/SKU; full pallets.</pre>
+                <button class="copy-button" data-target="script8_6_term" data-original-text="复制 - 条款 (样品)">复制 - 条款 (样品)</button>
+                <span class="copy-message" data-msg-for="script8_6_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_7_term">Packaging: White-label product; master carton with NABA logo.</pre>
+                <button class="copy-button" data-target="script8_7_term" data-original-text="复制 - 条款 (包装)">复制 - 条款 (包装)</button>
+                <span class="copy-message" data-msg-for="script8_7_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_8_term">Validity: Prices valid for the month issued.</pre>
+                <button class="copy-button" data-target="script8_8_term" data-original-text="复制 - 条款 (有效期)">复制 - 条款 (有效期)</button>
+                <span class="copy-message" data-msg-for="script8_8_term"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_9_term">Sample Receiving: Winson Yang, +1 626 620 6168, 17870 Castleton Street Ste 126, City of Industry, CA 91748.</pre>
+                <button class="copy-button" data-target="script8_9_term" data-original-text="复制 - 条款 (样品接收地址)">复制 - 条款 (样品接收地址)</button>
+                <span class="copy-message" data-msg-for="script8_9_term"></span>
+            </div>
+        </div>
+        
+        <div class="script-section">
+             <h3 id="toc-scene9">场景 9: 特殊情景回复 (Situational)</h3>
              <p style="color: #666; font-style: italic;">使用场景: 针对特定情景（如未接来电）的回复。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script6_2_qa">Hi, May I know how to address you? — Miles from NABAFOOD (LA). We keep LA stock (Soup Bowls, MFPP Clamshells, etc.) MOQ $1000 in CA. May I send our catalog and pricing? Which city/state are you based in?</pre>
@@ -378,7 +440,7 @@ Thanks again, and have a great day!</pre>
         </div>
 
         <div class="script-section">
-            <h3 id="toc-scene9">场景 9: 感谢回复 (Thank You)</h3>
+            <h3 id="toc-scene10">场景 10: 感谢回复 (Thank You)</h3>
             <p style="color: #666; font-style: italic;">使用场景：用于快速、礼貌地感谢客户的回复。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script7_1">Hi — thanks for getting back to me.</pre>
@@ -413,7 +475,7 @@ Thanks again, and have a great day!</pre>
         </div>
 
         <div class="script-section">
-            <h3 id="toc-scene10">场景 10: 希望得到回复 (Seeking Reply)</h3>
+            <h3 id="toc-scene11">场景 11: 希望得到回复 (Seeking Reply)</h3>
             <p style="color: #666; font-style: italic;">使用场景：用于礼貌地征询对方的看法或等待对方的回复。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script8_1">Looking forward to hearing from you.</pre>
@@ -448,7 +510,7 @@ Thanks again, and have a great day!</pre>
         </div>
 
         <div class="script-section">
-            <h3 id="toc-scene11">场景 11: 结尾祝福 (Closings)</h3>
+            <h3 id="toc-scene12">场景 12: 结尾祝福 (Closings)</h3>
             <p style="color: #666; font-style: italic;">使用场景：用于对话的结尾。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script9_1">Best regards,</pre>
@@ -473,13 +535,12 @@ Thanks again, and have a great day!</pre>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script9_5">Have a great weekend.</pre>
                 <button class="copy-button" data-target="script9_5" data-original-text="复制 - 祝你周末愉快">复制 - 祝你周末愉快</button>
-
                 <span class="copy-message" data-msg-for="script9_5"></span>
             </div>
-        </div>
+            </div>
 
         <div class="script-section">
-            <h3 id="toc-scene12">场景 12: 通用/联系方式</h3>
+            <h3 id="toc-scene13">场景 13: 通用/联系方式</h3>
             <p style="color: #666; font-style: italic;">使用场景：在对话中提供您的多种联系方式。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script10_1">You can reply to this message, or reach me via:
@@ -493,7 +554,7 @@ Facebook: https://www.facebook.com/mileshuang666</pre>
         </div>
 
         <div class="script-section">
-            <h3 id="toc-scene13">场景 13: 询问月销量 (Asking Volume)</h3>
+            <h3 id="toc-scene14">场景 14: 询问月销量 (Asking Volume)</h3>
             <p style="color: #666; font-style: italic;">使用场景：用于了解客户的潜在采购规模。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script11_1">What is your estimated monthly sales volume for this product?</pre>
@@ -518,7 +579,7 @@ Facebook: https://www.facebook.com/mileshuang666</pre>
         </div>
 
         <div class="script-section">
-            <h3 id="toc-scene14">场景 14: 回复不用客气 (You're Welcome)</h3>
+            <h3 id="toc-scene15">场景 15: 回复不用客气 (You're Welcome)</h3>
             <p style="color: #666; font-style: italic;">使用场景：用于回复客户的感谢。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script12_2">Happy to help.</pre>
@@ -548,7 +609,7 @@ Facebook: https://www.facebook.com/mileshuang666</pre>
         </div>
         
         <div class="script-section">
-            <h3 id="toc-scene15">场景 15: 重新激活 (发送新目录)</h3>
+            <h3 id="toc-scene16">场景 16: 重新激活 (发送新目录)</h3>
             <p style="color: #666; font-style: italic;">使用场景：用于跟进长期未回复的客户，通过发送新目录来尝试重新建立联系。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script13_1">Hi [Name] — quick follow-up. Here’s our latest product catalog. If you need sizes, stock status, or pricing, I’m happy to help anytime.</pre>
