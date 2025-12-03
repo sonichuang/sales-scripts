@@ -184,6 +184,30 @@
             color: green;
             font-weight: bold;
         }
+
+        /* 邮件场景专用样式 */
+        .email-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #fdfdfd;
+        }
+        .email-container h5 {
+            margin-top: 0;
+            color: #0056b3;
+            font-size: 15px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .email-label {
+            font-size: 12px;
+            color: #888;
+            font-weight: bold;
+            margin-bottom: 4px;
+            display: block;
+        }
         
     </style>
 </head>
@@ -216,6 +240,7 @@
             <a href="#toc-scene20">场景 20: 回复客户拒绝 (Rejection)</a>
             <a href="#toc-scene21" style="color: #d63384;">场景 21: 节日祝福 - 感恩节 (NEW)</a>
             <a href="#toc-scene22" style="color: #d63384;">场景 22: 节后开场 - 感恩节后 (NEW)</a>
+            <a href="#toc-scene23" style="color: #007bff;">场景 23: 邮件开发 - 首次联系 (NEW)</a>
         </div>
     </div>
 
@@ -224,30 +249,30 @@
 
         <div class="script-section">
             <h3 id="toc-scene1">场景 1: 首次接触 (Cold Outreach - 问询)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：联系采购/运营/销售管理等不确定是否是最终负责人的头衔。</p>
+            <p style="color: #666; font-style: italic;">使用场景：联系采购/运营/销售管理等不确定是否是最终负责人的头衔。**已更新：增加“支持定制”描述**</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_1">Hi there, — Miles from NABAFOOD (LA). We keep LA stock of Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks. MOQ $1000. Are you handling purchasing at {{Company}} or could you point me to the right contact?</pre>
-                <button class="copy-button" data-target="script1_1" data-original-text="复制 - 问是否处理包装采购">复制 - 问是否处理包装采购</button>
+                <pre class="text-to-copy" id="script1_1">Hi there, — Miles from NABAFOOD (LA). We offer both LA ready stock and Customization services for disposable packaging (Soup Bowls, Clamshells, etc.). Stock MOQ $1000. Are you handling purchasing at {{Company}}?</pre>
+                <button class="copy-button" data-target="script1_1" data-original-text="复制 - 问是否处理采购(含定制)">复制 - 问是否处理采购(含定制)</button>
                 <span class="copy-message" data-msg-for="script1_1"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_2">Hi there, — Miles from NABAFOOD (LA). We stock LA warehouse for fast replenishment (Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, Chopsticks). MOQ $1000. Are you the right contact for purchasing at {{Company}}, or could you point me to the buyer?</pre>
-                <button class="copy-button" data-target="script1_2" data-original-text="复制 - 问是否为采购本人">复制 - 问是否为采购本人</button>
+                <pre class="text-to-copy" id="script1_2">Hi there, — Miles from NABAFOOD (LA). We maintain LA warehouse stock for fast replenishment and also support Custom Branding (Soup Bowls, MFPP Clamshells, Gloves). MOQ $1000. Are you the right contact for purchasing at {{Company}}?</pre>
+                <button class="copy-button" data-target="script1_2" data-original-text="复制 - 问是否为采购本人(含定制)">复制 - 问是否为采购本人(含定制)</button>
                 <span class="copy-message" data-msg-for="script1_2"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_3">Hi there, — Miles from NABAFOOD (LA). We supply LA stock of disposable food packaging with quick dispatch (Soup Bowls, MFPP Clamshells, Take-out Containers, etc.). MOQ $1000. Are you involved in purchasing or category management at {{Company}}?</pre>
-                <button class="copy-button" data-target="script1_3" data-original-text="复制 - 问是否负责采购/品类管理">复制 - 问是否负责采购/品类管理</button>
+                <pre class="text-to-copy" id="script1_3">Hi there, — Miles from NABAFOOD (LA). We are a one-stop supplier for disposable packaging: Quick LA Stock + Custom Production. MOQ $1000. Are you involved in purchasing or category management at {{Company}}?</pre>
+                <button class="copy-button" data-target="script1_3" data-original-text="复制 - 强调一站式(现货+定制)">复制 - 强调一站式(现货+定制)</button>
                 <span class="copy-message" data-msg-for="script1_3"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_4">Hi there, — Miles from NABAFOOD (LA). We keep 𝐋𝐀 𝐬𝐭𝐨𝐜𝐤 (Soup Bowl, containers, MFPP clamshells, gloves, chopsticks) with 𝐌𝐎Q $𝟏𝟎𝟎𝟎. Are you involved with {{Company}} supply or could you point me to the purchasing contact?</pre>
-                <button class="copy-button" data-target="script1_4" data-original-text="复制 - 强调LA现货/MOQ并提问">复制 - 强调LA现货/MOQ并提问</button>
+                <pre class="text-to-copy" id="script1_4">Hi there, — Miles from NABAFOOD (LA). We provide 𝐋𝐀 𝐬𝐭𝐨𝐜𝐤 for speed and 𝐂𝐮𝐬𝐭𝐨𝐦 𝐎𝐩𝐭𝐢𝐨𝐧𝐬 for branding (Soup Bowl, clamshells, gloves). 𝐌𝐎Q $𝟏𝟎𝟎𝟎. Are you involved with {{Company}} supply?</pre>
+                <button class="copy-button" data-target="script1_4" data-original-text="复制 - 强调LA现货/定制并提问">复制 - 强调LA现货/定制并提问</button>
                 <span class="copy-message" data-msg-for="script1_4"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_5">Hi team — Miles from NABAFOOD (LA). We keep 𝗟𝗔 stock of Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks (MOQ $1000 in CA). Recyclable, food-grade. May I share the catalog? Who is the best contact for purchasing?</pre>
-                <button class="copy-button" data-target="script1_5" data-original-text="复制 - 针对团队/问采购联系人">复制 - 针对团队/问采购联系人</button>
+                <pre class="text-to-copy" id="script1_5">Hi team — Miles from NABAFOOD (LA). We supply Soup Bowls, Clamshells, and Gloves via LA Stock or Custom Orders. Recyclable, food-grade. May I share the catalog? Who is the best contact for purchasing?</pre>
+                <button class="copy-button" data-target="script1_5" data-original-text="复制 - 针对团队/问采购(含定制)">复制 - 针对团队/问采购(含定制)</button>
                 <span class="copy-message" data-msg-for="script1_5"></span>
             </div>
         </div>
@@ -256,54 +281,34 @@
             <h3 id="toc-scene2">场景 2: 首次接触 (针对团队)</h3>
             <p style="color: #666; font-style: italic;">使用场景：向公司的通用邮箱或团队发送消息时使用。</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_1_team">Hi team — Miles from NABAFOOD (LA). We keep 𝗟𝗔 stock of Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks (MOQ $1000 in CA). Recyclable, food-grade. May I share the catalog? Who is the best contact for purchasing?</pre>
-                <button class="copy-button" data-target="script2_1_team" data-original-text="复制 - 针对团队/问采购联系人">复制 - 针对团队/问采购联系人</button>
+                <pre class="text-to-copy" id="script2_1_team">Hi team — Miles from NABAFOOD (LA). We offer LA Stock for fast dispatch and Custom Production for private labeling (Soup Bowls, Clamshells, Gloves). May I share the catalog? Who is the best contact?</pre>
+                <button class="copy-button" data-target="script2_1_team" data-original-text="复制 - 针对团队/含定制信息">复制 - 针对团队/含定制信息</button>
                 <span class="copy-message" data-msg-for="script2_1_team"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_2_team">Hi {{Company}} Team — Miles from NABAFOOD here. We are an LA-based supplier (MOQ $1000) for disposable packaging (Soup Bowls, Clamshells, etc.). We specialize in fast, local replenishment from our LA warehouse. Could you please direct me to the person in charge of purchasing these items?</pre>
-                <button class="copy-button" data-target="script2_2_team" data-original-text="复制 - 针对团队/侧重补货">复制 - 针对团队/侧重补货</button>
+                <pre class="text-to-copy" id="script2_2_team">Hi {{Company}} Team — Miles from NABAFOOD here. We are an LA-based supplier offering both Ready Stock (MOQ $1000) and Customization services for disposable packaging. Could you direct me to the person in charge?</pre>
+                <button class="copy-button" data-target="script2_2_team" data-original-text="复制 - 针对团队/现货+定制">复制 - 针对团队/现货+定制</button>
                 <span class="copy-message" data-msg-for="script2_2_team"></span>
-            </div>
-            <div class="copy-block">
-                <pre class="text-to-copy" id="script2_3_team">To the Purchasing Team: We supply LA stock of essential disposables (Soup Bowls, MFPP Clamshells) with a low $1000 MOQ. We are a one-stop supplier for quick replenishment. Could you forward this message to your packaging buyer? Thanks, Miles (NABAFOOD LA).</pre>
-                <button class="copy-button" data-target="script2_3_team" data-original-text="复制 - 针对团队/侧重一站式">复制 - 针对团队/侧重一站式</button>
-                <span class="copy-message" data-msg-for="script2_3_team"></span>
-            </div>
-            <div class="copy-block">
-                <pre class="text-to-copy" id="script2_4_team">Hi there — Miles from NABAFOOD (LA). We stock Soup Bowls, Clamshells, and Take-out Containers for fast dispatch from our LA warehouse. Is this the right inbox to discuss purchasing, or could you point me to the correct contact? (MOQ $1000).</pre>
-                <button class="copy-button" data-target="script2_4_team" data-original-text="复制 - 针对团队/确认收件人">复制 - 针对团队/确认收件人</button>
-                <span class="copy-message" data-msg-for="script2_4_team"></span>
             </div>
         </div>
 
         <div class="script-section">
             <h3 id="toc-scene3">场景 3: 首次接触 (Cold Outreach - 主动报价)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：已确认是负责人，或需要发起报价请求。</p>
+            <p style="color: #666; font-style: italic;">使用场景：已确认是负责人，或需要发起报价请求。**已更新：增加“支持定制”描述**</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_1">Hi — Miles from NABAFOOD (LA). We stock Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks in LA for fast replenishment (MOQ $1000). May I send our catalog and pricing? We ship nationwide. Thanks!</pre>
-                <button class="copy-button" data-target="script2_1" data-original-text="复制 - 简短推目录/报价">复制 - 简短推目录/报价</button>
+                <pre class="text-to-copy" id="script2_1">Hi — Miles from NABAFOOD (LA). We supply Soup Bowls, Clamshells, and Gloves with Custom Printing options or LA Stock for fast restocks (MOQ $1000). May I send our catalog and pricing?</pre>
+                <button class="copy-button" data-target="script2_1" data-original-text="复制 - 简短推目录(含定制选项)">复制 - 简短推目录(含定制选项)</button>
                 <span class="copy-message" data-msg-for="script2_1"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_2">Hi, thanks for connecting. This is Miles from NABAFOOD (LA). We stock Soup Bowls, MFPP Clamshells, Take-out Containers, Gloves, and Chopsticks in LA. MOQ $1000. May I share the catalog? Who is the best contact for purchasing?</pre>
-                <button class="copy-button" data-target="script2_2" data-original-text="复制 - 推目录/再确认采购人">复制 - 推目录/再确认采购人</button>
+                <pre class="text-to-copy" id="script2_2">Hi, thanks for connecting. This is Miles from NABAFOOD (LA). We offer both Custom-branded packaging and LA Ready Stock (Soup Bowls, Clamshells, Gloves). MOQ $1000. May I share the catalog?</pre>
+                <button class="copy-button" data-target="script2_2" data-original-text="复制 - 推目录/双重服务">复制 - 推目录/双重服务</button>
                 <span class="copy-message" data-msg-for="script2_2"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_3">Hi — Miles from NABAFOOD (LA). We stock Soup Bowls, Clamshells, and Containers locally for quick restocks (MOQ $1000). Could I send our catalog and price list for you to compare with your current supplier?</pre>
-                <button class="copy-button" data-target="script2_3" data-original-text="复制 - 引导比价(含目录报价)">复制 - 引导比价(含目录报价)</button>
+                <pre class="text-to-copy" id="script2_3">Hi — Miles from NABAFOOD (LA). We stock Soup Bowls & Clamshells locally (MOQ $1000) and also accept Custom Orders. Could I send our catalog and price list for you to compare?</pre>
+                <button class="copy-button" data-target="script2_3" data-original-text="复制 - 引导比价(现货+定制)">复制 - 引导比价(现货+定制)</button>
                 <span class="copy-message" data-msg-for="script2_3"></span>
-            </div>
-            <div class="copy-block">
-                <pre class="text-to-copy" id="script2_4">Hi, Miles here from NABAFOOD. We provide fast delivery to CA/TX for Soup Bowls, Clamshells, and Gloves from our LA warehouse (MOQ $1000). May I send you our catalog and pricing?</pre>
-                <button class="copy-button" data-target="script2_4" data-original-text="复制 - 强调CA/TX时效(含目录报价)">复制 - 强调CA/TX时效(含目录报价)</button>
-                <span class="copy-message" data-msg-for="script2_4"></span>
-            </div>
-            <div class="copy-block">
-                <pre class="text-to-copy" id="script2_5">Hi — need quick restocks on Soup Bowls or MFPP Clamshells? We have LA stock ready to ship (MOQ $1000). Can I share our catalog and current pricing?</pre>
-                <button class="copy-button" data-target="script2_5" data-original-text="复制 - 强调快速补货(含目录报价)">复制 - 强调快速补货(含目录报价)</button>
-                <span class="copy-message" data-msg-for="script2_5"></span>
             </div>
         </div>
         
@@ -326,13 +331,13 @@
             <h3 id="toc-scene5">场景 5: 发送目录 (Sending Catalog)</h3>
             <p style="color: #666; font-style: italic;">使用场景：客户对首次接触有兴趣，回复了您，您现在发送产品目录。</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script5_1_new">Hi there, I’ve attached our product catalog. May I know how to address you? Which city/state are you based in? I’ll follow up with pricing on the items that fit your needs.</pre>
+                <pre class="text-to-copy" id="script5_1_new">Hi there, I’ve attached our product catalog (Stock & Custom capabilities). May I know how to address you? Which city/state are you based in? I’ll follow up with pricing on the items that fit your needs.</pre>
                 <button class="copy-button" data-target="script5_1_new" data-original-text="复制 - 附目录/问地址">复制 - 附目录/问地址</button>
                 <span class="copy-message" data-msg-for="script5_1_new"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script5_2_catalog">Hi — sharing our Product Catalog (PDF), the hot-selling SKUs price list and To Go Container List here. These are our current best sellers; if you’re interested in other items or sizes, I can quote those separately. To-Go Containers aren’t in LA stock right now; we can pre-book the next inbound (approx. 30–45 days into our LA warehouse). Would this be of interest?</pre>
-                <button class="copy-button" data-target="script5_2_catalog" data-original-text="复制 - 发目录(含预购说明)">复制 - 发目录(含预购说明)</button>
+                <pre class="text-to-copy" id="script5_2_catalog">Hi — sharing our Product Catalog (PDF), the hot-selling SKUs price list and To Go Container List here. These are our current best sellers; if you’re interested in Customization or other sizes, I can quote those separately. To-Go Containers aren’t in LA stock right now; we can pre-book the next inbound. Would this be of interest?</pre>
+                <button class="copy-button" data-target="script5_2_catalog" data-original-text="复制 - 发目录(含定制提及)">复制 - 发目录(含定制提及)</button>
                 <span class="copy-message" data-msg-for="script5_2_catalog"></span>
             </div>
         </div>
@@ -344,7 +349,7 @@
                 <pre class="text-to-copy" id="script6_1_followup">Hi — did you get our catalog? Share your city/state and I'll send pricing for best-sellers.
 
 Notes: 
-• Min 1 pallet/SKU; whole-pallet only. 
+• Stock Min 1 pallet/SKU. Custom orders discussed separately.
 • CA MOQ US$1,000 (Free delivery for $3,000+).
 • Outside CA MOQ US$3,000.
 • Terms: Payment in advance; freight collect (EXW Commerce, CA).</pre>
@@ -354,7 +359,7 @@ Notes:
             <div class="copy-block">
                 <pre class="text-to-copy" id="script6_2_followup">Hi,
 Just checking in on the catalog I sent. Would you be interested in a quotation? 
-If samples help, we can ship them at no charge once we receive a photo of your company license. 
+If samples help (stock or custom references), we can ship them at no charge once we receive a photo of your company license. 
 A quick reply would be appreciated—thank you.</pre>
                 <button class="copy-button" data-target="script6_2_followup" data-original-text="复制 - 跟进目录/推报价/样品">复制 - 跟进目录/推报价/样品</button>
                 <span class="copy-message" data-msg-for="script6_2_followup"></span>
@@ -365,19 +370,14 @@ A quick reply would be appreciated—thank you.</pre>
             <h3 id="toc-scene7">场景 7: 发送报价 (Sending Quotation)</h3>
             <p style="color: #666; font-style: italic;">使用场景：客户明确询问价格，或目录跟进后发送具体报价单。</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script7_1_quote">Hi — updated hot-sellers price sheet attached. If you’re interested or need clarification, please message me.</pre>
+                <pre class="text-to-copy" id="script7_1_quote">Hi — updated hot-sellers price sheet attached. If you’re interested in Custom Pricing or need clarification, please message me.</pre>
                 <button class="copy-button" data-target="script7_1_quote" data-original-text="复制 - 附热销价格表">复制 - 附热销价格表</button>
                 <span class="copy-message" data-msg-for="script7_1_quote"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script7_2_quote">Hi, attached is our updated pricing for hot movers (MFPP clamshells, N-series soup bowls, Vinyl & Nitrile Gloves). Happy to help anytime.</pre>
-                <button class="copy-button" data-target="script7_2_quote" data-original-text="复制 - 附核心产品报价(含手套)">复制 - 附核心产品报价(含手套)</button>
+                <pre class="text-to-copy" id="script7_2_quote">Hi, attached is our updated pricing for hot movers (MFPP clamshells, N-series soup bowls, Vinyl & Nitrile Gloves). Custom printing quotes available upon request. Happy to help anytime.</pre>
+                <button class="copy-button" data-target="script7_2_quote" data-original-text="复制 - 附核心产品报价(含定制)">复制 - 附核心产品报价(含定制)</button>
                 <span class="copy-message" data-msg-for="script7_2_quote"></span>
-            </div>
-            <div class="copy-block">
-                <pre class="text-to-copy" id="script7_3_quote">Hi — sharing our updated hot-sellers pricing. If any SKUs interest you or you have questions, just let me know.</pre>
-                <button class="copy-button" data-target="script7_3_quote" data-original-text="复制 - 分享报价/询问意向">复制 - 分享报价/询问意向</button>
-                <span class="copy-message" data-msg-for="script7_3_quote"></span>
             </div>
         </div>
 
@@ -455,15 +455,15 @@ Thanks again, and have a great day!</pre>
         
         <div class="script-section">
              <h3 id="toc-scene10">场景 10: 回复业务/条款 (Business Q&A)</h3>
-             <p style="color: #666; font-style: italic;">使用场景: 回复关于定制、条款等具体业务问题。</p>
+             <p style="color: #666; font-style: italic;">使用场景: 回复关于定制、条款等具体业务问题。**已更新：改为接受定制**</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script10_1_qa">I am sorry, we supply ready stock from LA warehouse only, no customization. Inventory: Soup bowls, MFPP clamshells, Gloves, Chopsticks. (Take-out containers: Preorder, 45-day lead to CA/TX). Which city/state are you based in? I can send our catalog and pricing.</pre>
-                <button class="copy-button" data-target="script10_1_qa" data-original-text="复制 - 回复不可定制/列出现货">复制 - 回复不可定制/列出现货</button>
+                <pre class="text-to-copy" id="script10_1_qa">Yes, we accept Custom Orders / Private Label (Logo printing, custom sizes). We also keep LA stock for quick top-ups (Inventory: Soup bowls, MFPP clamshells, Gloves). MOQ $1000. What kind of customization are you looking for?</pre>
+                <button class="copy-button" data-target="script10_1_qa" data-original-text="复制 - 接受定制/贴牌+现货">复制 - 接受定制/贴牌+现货</button>
                 <span class="copy-message" data-msg-for="script10_1_qa"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script10_2_qa">Hi! I’ve attached our catalog and price list. Pricing: min 1 pallet/SKU, whole-pallet only. We supply LA stock only, no customization. If email is more convenient, what’s the best address?</pre>
-                <button class="copy-button" data-target="script10_2_qa" data-original-text="复制 - 发目录/报价(含详细条款)">复制 - 发目录/报价(含详细条款)</button>
+                <pre class="text-to-copy" id="script10_2_qa">Hi! I’ve attached our catalog and price list. Pricing: min 1 pallet/SKU, whole-pallet only. We supply LA stock and Custom Options. If email is more convenient, what’s the best address?</pre>
+                <button class="copy-button" data-target="script10_2_qa" data-original-text="复制 - 发目录/报价(含定制)">复制 - 发目录/报价(含定制)</button>
                 <span class="copy-message" data-msg-for="script10_2_qa"></span>
             </div>
         </div>
@@ -522,7 +522,7 @@ Thanks again, and have a great day!</pre>
              <h3 id="toc-scene12">场景 12: 特殊情景回复 (Situational)</h3>
              <p style="color: #666; font-style: italic;">使用场景: 针对特定情景（如未接来电）的回复。</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script6_2_qa">Hi, May I know how to address you? — Miles from NABAFOOD (LA). We keep LA stock (Soup Bowls, MFPP Clamshells, etc.) MOQ $1000 in CA. May I send our catalog and pricing? Which city/state are you based in?</pre>
+                <pre class="text-to-copy" id="script6_2_qa">Hi, May I know how to address you? — Miles from NABAFOOD (LA). We keep LA stock (Soup Bowls, MFPP Clamshells, etc.) and do custom orders. MOQ $1000 in CA. May I send our catalog and pricing? Which city/state are you based in?</pre>
                 <button class="copy-button" data-target="script6_2_qa" data-original-text="复制 - 针对Whatsapp/未接来电">复制 - 针对Whatsapp/未接来电</button>
                 <span class="copy-message" data-msg-for="script6_2_qa"></span>
             </div>
@@ -743,7 +743,6 @@ FB: mileshuang666 (https://facebook.com/mileshuang666)
             </div>
         </div>
 
-        <!-- NEW SCENE 21 -->
         <div class="script-section">
             <h3 id="toc-scene21">场景 21: 节日祝福 - 感恩节 (Holiday Greetings - Thanksgiving)</h3>
             <p style="color: #666; font-style: italic;">使用场景：在感恩节期间发送，分为“老客户”和“潜在客户”两个板块。</p>
@@ -861,7 +860,6 @@ FB: mileshuang666 (https://facebook.com/mileshuang666)
             </div>
         </div>
         
-        <!-- NEW SCENE 22 -->
         <div class="script-section">
             <h3 id="toc-scene22">场景 22: 节后开场 - 感恩节后 (Post-Thanksgiving Openers)</h3>
             <p style="color: #666; font-style: italic;">使用场景：感恩节假期结束后，恢复联系时的第一句话。</p>
@@ -900,6 +898,176 @@ FB: mileshuang666 (https://facebook.com/mileshuang666)
                 <pre class="text-to-copy" id="script22_6">Hope you had a nice holiday break.</pre>
                 <button class="copy-button" data-target="script22_6" data-original-text="复制 - 简洁(Nice Holiday)">复制 - 简洁(Nice Holiday)</button>
                 <span class="copy-message" data-msg-for="script22_6"></span>
+            </div>
+        </div>
+
+        <!-- NEW SCENE 23 (SPLIT SUBJECT/BODY) -->
+        <div class="script-section">
+            <h3 id="toc-scene23">场景 23: 邮件开发 - 首次联系 (Cold Email - Stock & Custom)</h3>
+            <p style="color: #666; font-style: italic;">使用场景：向潜在客户发送正式的开发邮件，强调现货+定制双重优势。</p>
+
+            <div class="email-container">
+                <h5>1. 标准商务 (Standard Business)</h5>
+                
+                <span class="email-label">邮件主题 (Subject):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_1_subj">Supply Inquiry: Disposable Packaging (Stock & Custom Options)</pre>
+                    <button class="copy-button" data-target="script23_1_subj" data-original-text="复制主题">复制主题</button>
+                    <span class="copy-message" data-msg-for="script23_1_subj"></span>
+                </div>
+
+                <span class="email-label">邮件正文 (Body):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_1_body">Hi there,
+
+Hope you’re doing well.
+
+This is Miles from NABAFOOD (LA). We specialize in disposable food-service packaging, offering both ready stock in Los Angeles and custom-branded production.
+
+If you need fast restocks, I can send our catalog of LA stock items (Soup Bowls, Clamshells, etc.). May I ask where your warehouse is located?
+
+For custom projects, please share your specs (size, material, weight, packing) or photos. We can review and provide a competitive quote.
+
+Best regards,
+Miles</pre>
+                    <button class="copy-button" data-target="script23_1_body" data-original-text="复制正文">复制正文</button>
+                    <span class="copy-message" data-msg-for="script23_1_body"></span>
+                </div>
+            </div>
+
+            <div class="email-container">
+                <h5>2. 开门见山 (Direct & Benefit-Led)</h5>
+                
+                <span class="email-label">邮件主题 (Subject):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_2_subj">Better Packaging Supply: LA Stock + Private Label</pre>
+                    <button class="copy-button" data-target="script23_2_subj" data-original-text="复制主题">复制主题</button>
+                    <span class="copy-message" data-msg-for="script23_2_subj"></span>
+                </div>
+
+                <span class="email-label">邮件正文 (Body):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_2_body">Hi there,
+
+Looking for a reliable packaging partner? At NABAFOOD, we offer the best of both worlds:
+1. Fast LA Stock: Immediate dispatch for Soup Bowls, Clamshells, and Gloves.
+2. Custom Branding: Private label production to your specs.
+
+Where are you based? I can send our stock catalog or a custom quote based on your needs.
+
+Best,
+Miles (NABAFOOD LA)</pre>
+                    <button class="copy-button" data-target="script23_2_body" data-original-text="复制正文">复制正文</button>
+                    <span class="copy-message" data-msg-for="script23_2_body"></span>
+                </div>
+            </div>
+
+            <div class="email-container">
+                <h5>3. 侧重现货优势 (Stock Focus)</h5>
+                
+                <span class="email-label">邮件主题 (Subject):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_3_subj">Need faster turnaround on Soup Bowls/Clamshells? (LA Stock)</pre>
+                    <button class="copy-button" data-target="script23_3_subj" data-original-text="复制主题">复制主题</button>
+                    <span class="copy-message" data-msg-for="script23_3_subj"></span>
+                </div>
+
+                <span class="email-label">邮件正文 (Body):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_3_body">Hi,
+
+Do you need quicker turnaround on your packaging? We keep ready stock in Los Angeles for Soup Bowls and Clamshells (MOQ $1000).
+
+We also support custom production if you need specific branding.
+
+Let me know your warehouse location, and I’ll send over our price list and catalog.
+
+Thanks,
+Miles</pre>
+                    <button class="copy-button" data-target="script23_3_body" data-original-text="复制正文">复制正文</button>
+                    <span class="copy-message" data-msg-for="script23_3_body"></span>
+                </div>
+            </div>
+
+            <div class="email-container">
+                <h5>4. 侧重定制能力 (Custom Focus)</h5>
+                
+                <span class="email-label">邮件主题 (Subject):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_4_subj">Private Label Packaging Services (Custom Print & Sizes)</pre>
+                    <button class="copy-button" data-target="script23_4_subj" data-original-text="复制主题">复制主题</button>
+                    <span class="copy-message" data-msg-for="script23_4_subj"></span>
+                </div>
+
+                <span class="email-label">邮件正文 (Body):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_4_body">Hi there,
+
+Miles here from NABAFOOD. If you are looking for custom-branded packaging (Private Label), we can help. Please share your specs or photos for a quote.
+
+We also maintain a large inventory in Los Angeles for immediate needs.
+
+Attached is our catalog. Let me know if you’d like to see pricing.
+
+Best regards,
+Miles</pre>
+                    <button class="copy-button" data-target="script23_4_body" data-original-text="复制正文">复制正文</button>
+                    <span class="copy-message" data-msg-for="script23_4_body"></span>
+                </div>
+            </div>
+
+            <div class="email-container">
+                <h5>5. 简短有力 (Concise / Mobile Friendly)</h5>
+                
+                <span class="email-label">邮件主题 (Subject):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_5_subj">Quick question: Stock vs Custom Packaging</pre>
+                    <button class="copy-button" data-target="script23_5_subj" data-original-text="复制主题">复制主题</button>
+                    <span class="copy-message" data-msg-for="script23_5_subj"></span>
+                </div>
+
+                <span class="email-label">邮件正文 (Body):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_5_body">Hi,
+
+NABAFOOD here. We supply disposable packaging with two options:
+1. LA Ready Stock (Fast ship, low MOQ).
+2. Custom Production (Your brand/specs).
+
+Interested? Let me know your location, and I’ll share the catalog/pricing.
+
+Thanks,
+Miles</pre>
+                    <button class="copy-button" data-target="script23_5_body" data-original-text="复制正文">复制正文</button>
+                    <span class="copy-message" data-msg-for="script23_5_body"></span>
+                </div>
+            </div>
+
+            <div class="email-container">
+                <h5>6. 柔性询问 (Soft Ask)</h5>
+                
+                <span class="email-label">邮件主题 (Subject):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_6_subj">A backup option for your packaging needs</pre>
+                    <button class="copy-button" data-target="script23_6_subj" data-original-text="复制主题">复制主题</button>
+                    <span class="copy-message" data-msg-for="script23_6_subj"></span>
+                </div>
+
+                <span class="email-label">邮件正文 (Body):</span>
+                <div class="copy-block">
+                    <pre class="text-to-copy" id="script23_6_body">Hi there,
+
+Hope you’re having a good week.
+
+Just reaching out to see if you need a backup supplier for packaging. We have stock in LA for quick top-ups and can also handle your custom-print orders.
+
+If you’re open to comparing prices, feel free to send over your current specs or ask for our stock list.
+
+Best,
+Miles</pre>
+                    <button class="copy-button" data-target="script23_6_body" data-original-text="复制正文">复制正文</button>
+                    <span class="copy-message" data-msg-for="script23_6_body"></span>
+                </div>
             </div>
         </div>
 
