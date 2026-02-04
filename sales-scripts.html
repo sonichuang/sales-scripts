@@ -5,216 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>销售话术一键复制工具 (SOP 最终版)</title>
     <style>
-        /* --- 基础和移动端样式 (Mobile-First) --- */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0; 
-            padding: 0;
-            background-color: #f4f4f9;
-            /* 在手机上，允许页面正常滚动 */
-            height: auto;
-            overflow-y: auto;
-        }
-
-        /* 汉堡菜单按钮 (仅手机显示) */
-        #nav-toggle-btn {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1001; /* 保持在最上层 */
-            font-size: 16px;
-        }
-
-        /* 侧边栏 (手机上默认隐藏) */
-        #left-sidebar {
-            position: fixed; /* 固定在屏幕上 */
-            top: 0;
-            left: 0;
-            width: 280px; 
-            height: 100%; /* 占满全高 */
-            padding: 20px;
-            background-color: #eaf6ff;
-            border-right: 1px solid #ccc;
-            overflow-y: auto; 
-            z-index: 1000;
-            
-            /* 默认隐藏在屏幕外 */
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            box-sizing: border-box; /* 确保 padding 不会增加宽度 */
-        }
-
-        /* 侧边栏的 "显示" 状态 */
-        #left-sidebar.active {
-            transform: translateX(0);
-        }
-
-        /* 右侧内容区域 (手机) */
-        #right-content {
-            padding: 20px;
-            padding-top: 70px; /* 留出空间，避免被汉堡按钮遮挡 */
-        }
-
-        /* --- 电脑端样式 (769px 以上) --- */
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; height: auto; overflow-y: auto; }
+        #nav-toggle-btn { position: fixed; top: 10px; left: 10px; background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; z-index: 1001; font-size: 16px; }
+        #left-sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100%; padding: 20px; background-color: #eaf6ff; border-right: 1px solid #ccc; overflow-y: auto; z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease-in-out; box-sizing: border-box; }
+        #left-sidebar.active { transform: translateX(0); }
+        #right-content { padding: 20px; padding-top: 70px; }
         @media (min-width: 769px) {
-            body {
-                /* 恢复桌面的左右 Flex 布局 */
-                display: flex; 
-                height: 100vh; 
-                overflow: hidden; 
-            }
-
-            /* 隐藏汉堡按钮 */
-            #nav-toggle-btn {
-                display: none;
-            }
-
-            /* 侧边栏 (电脑 - 始终显示) */
-            #left-sidebar {
-                position: static; /* 恢复为文档流的一部分 */
-                transform: none; /* 取消隐藏 */
-                flex-shrink: 0; 
-                height: auto;
-                transition: none; /* 电脑上不需要动画 */
-            }
-
-            /* 右侧内容 (电脑) */
-            #right-content {
-                flex-grow: 1; 
-                overflow-y: auto; /* 内容区独立滚动 */
-                padding: 20px; /* 恢复内边距 */
-            }
+            body { display: flex; height: 100vh; overflow: hidden; }
+            #nav-toggle-btn { display: none; }
+            #left-sidebar { position: static; transform: none; flex-shrink: 0; height: auto; transition: none; }
+            #right-content { flex-grow: 1; overflow-y: auto; padding: 20px; }
         }
-
-
-        /* --- 通用样式 (已优化：紧凑/扁平化) --- */
-        h1 {
-            color: #007bff;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-        #toc h3 {
-            margin-top: 0;
-            color: #333;
-        }
-        
-        /* 优化：导航栏更紧凑 */
-        #toc a {
-            display: block; 
-            margin-bottom: 6px; 
-            color: #0056b3;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px; 
-            padding: 4px 0; 
-            border-bottom: 1px dotted #cceeff;
-        }
-        #toc a:hover {
-            color: #007bff;
-            text-decoration: underline;
-        }
-        
-        /* 优化：扁平化 + 紧凑 */
-        .script-section {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-bottom: 20px; 
-            border-radius: 8px;
-            border: 1px solid #e0e0e0; /* 扁平化边框 */
-        }
-        .script-section h3 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-top: 0;
-            color: #333;
-        }
-        .script-section h4 {
-            color: #555;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-size: 16px;
-            border-left: 4px solid #007bff;
-            padding-left: 10px;
-            background-color: #f0f7ff;
-            padding: 8px;
-        }
-        
-        /* 优化：紧凑 */
-        .copy-block {
-            margin-bottom: 12px; 
-            padding: 12px; 
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-        }
-        
-        /* 优化：紧凑 */
-        .text-to-copy {
-            white-space: pre-wrap;
-            font-size: 14px;
-            color: #555;
-            margin-top: 0;
-            margin-bottom: 8px; 
-            padding: 8px;
-            background-color: #fff;
-            border: 1px dashed #ccc;
-        }
-        .copy-button {
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: bold;
-        }
-        .copy-button:hover {
-            background-color: #0056b3;
-        }
-        .copy-message {
-            margin-left: 10px;
-            color: green;
-            font-weight: bold;
-        }
-
-        /* 邮件场景专用样式 */
-        .email-container {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            background-color: #fdfdfd;
-        }
-        .email-container h5 {
-            margin-top: 0;
-            color: #0056b3;
-            font-size: 15px;
-            border-bottom: 1px dashed #ccc;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-        }
-        .email-label {
-            font-size: 12px;
-            color: #888;
-            font-weight: bold;
-            margin-bottom: 4px;
-            display: block;
-        }
-        
+        h1 { color: #007bff; border-bottom: 3px solid #007bff; padding-bottom: 10px; margin-top: 0; }
+        #toc h3 { margin-top: 0; color: #333; }
+        #toc a { display: block; margin-bottom: 6px; color: #0056b3; text-decoration: none; font-weight: bold; font-size: 14px; padding: 4px 0; border-bottom: 1px dotted #cceeff; }
+        #toc a:hover { color: #007bff; text-decoration: underline; }
+        .script-section { background-color: #ffffff; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #e0e0e0; }
+        .script-section h3 { border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-top: 0; color: #333; }
+        .script-section h4 { color: #555; margin-top: 15px; margin-bottom: 10px; font-size: 16px; border-left: 4px solid #007bff; padding-left: 10px; background-color: #f0f7ff; padding: 8px; }
+        .copy-block { margin-bottom: 12px; padding: 12px; border: 1px solid #e0e0e0; border-radius: 6px; background-color: #f9f9f9; }
+        .text-to-copy { white-space: pre-wrap; font-size: 14px; color: #555; margin-top: 0; margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px dashed #ccc; }
+        .copy-button { padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; font-weight: bold; }
+        .copy-button:hover { background-color: #0056b3; }
+        .copy-message { margin-left: 10px; color: green; font-weight: bold; }
+        .email-container { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 20px; background-color: #fdfdfd; }
+        .email-container h5 { margin-top: 0; color: #0056b3; font-size: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 8px; margin-bottom: 12px; }
+        .email-label { font-size: 12px; color: #888; font-weight: bold; margin-bottom: 4px; display: block; }
     </style>
 </head>
 <body>
-    
     <button id="nav-toggle-btn">&#9776; 导航</button>
-
     <div id="left-sidebar">
         <div id="toc">
             <h3>话术场景快速导航</h3>
@@ -253,44 +73,43 @@
 
         <div class="script-section">
             <h3 id="toc-scene1">场景 1: 首次接触 (Cold Outreach - 问询)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：联系采购/运营/销售管理等不确定是否是最终负责人的头衔。**已更新：强调 DDP 工厂直发省运费**</p>
+            <p style="color: #666; font-style: italic;">使用场景：联系采购/运营/销售管理等不确定是否是最终负责人的头衔。**已更新：Stock + 全品类 DDP/Custom**</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_1">Hi there, — Miles from NABAFOOD (LA). We keep essentials like Soup Bowls, Hinged Containers, Gloves & Chopsticks in LA/NJ stock. We also handle DDP delivered (factory-direct to save freight) or Custom orders for all categories (incl. Cups, Bags, Foil). Are you handling purchasing at {{Company}}?</pre>
-                <button class="copy-button" data-target="script1_1" data-original-text="复制 - 现货+DDP省运费">复制 - 现货+DDP省运费</button>
+                <pre class="text-to-copy" id="script1_1">Hi there, — Miles from NABAFOOD (LA). We keep essentials (Soup Bowls, Hinged, Gloves, Chopsticks) in LA/NJ stock. We also handle DDP delivered (factory-direct to save freight) or Custom orders for all categories (Bowls, Cups, Foil, Bags, etc.). Are you handling purchasing at {{Company}}?</pre>
+                <button class="copy-button" data-target="script1_1" data-original-text="复制 - 现货+全品类DDP/Custom">复制 - 现货+全品类DDP/Custom</button>
                 <span class="copy-message" data-msg-for="script1_1"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_2">Hi there, — Miles from NABAFOOD (LA). We've got LA/NJ stock ready for Soup Bowls, Hinged Containers, and Gloves. We can also do DDP delivered (factory-direct to save shipping costs) or Custom production for the full range (incl. Cups, Foil, etc.). Are you the right contact for purchasing?</pre>
-                <button class="copy-button" data-target="script1_2" data-original-text="复制 - 现货+直发省运费">复制 - 现货+直发省运费</button>
+                <pre class="text-to-copy" id="script1_2">Hi there, — Miles from NABAFOOD (LA). We've got LA/NJ stock ready for Soup Bowls, Hinged Containers, and Gloves. Need Custom printing or DDP delivered savings on any item (Bowls, Cups, Foil, etc.)? We can help. Are you the right contact for purchasing?</pre>
+                <button class="copy-button" data-target="script1_2" data-original-text="复制 - 现货+全品类省运费">复制 - 现货+全品类省运费</button>
                 <span class="copy-message" data-msg-for="script1_2"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_3">Hi there, — Miles from NABAFOOD (LA). We are a one-stop supplier: Quick Stock in LA/NJ (Bowls, Hinged, Gloves, Chopsticks) + DDP delivered (factory-direct to cut freight costs) for all categories (Cups, Paper Bags, Foil, etc.). Are you involved in purchasing?</pre>
-                <button class="copy-button" data-target="script1_3" data-original-text="复制 - 一站式(含省运费DDP)">复制 - 一站式(含省运费DDP)</button>
+                <pre class="text-to-copy" id="script1_3">Hi there, — Miles from NABAFOOD (LA). We are a one-stop supplier: Quick Stock in LA/NJ (Bowls, Hinged, Gloves) + Custom / DDP delivered services for all categories (Bowls, Cups, Paper Bags, Foil, etc.). Are you involved in purchasing?</pre>
+                <button class="copy-button" data-target="script1_3" data-original-text="复制 - 一站式(Stock+全品类)">复制 - 一站式(Stock+全品类)</button>
                 <span class="copy-message" data-msg-for="script1_3"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_4">Hi there, — Miles from NABAFOOD (LA). 𝐋𝐀 & 𝐍𝐉 𝐒𝐭𝐨𝐜𝐤 ready for Soup Bowls, Hinged Containers, Gloves, Chopsticks. We also do 𝐃𝐃𝐏 𝐝𝐞𝐥𝐢𝐯𝐞𝐫𝐞𝐝 (𝐟𝐚𝐜𝐭𝐨𝐫𝐲-𝐝𝐢𝐫𝐞𝐜𝐭 𝐭𝐨 𝐬𝐚𝐯𝐞 𝐛𝐢𝐠 𝐨𝐧 𝐟𝐫𝐞𝐢𝐠𝐡𝐭) for the 𝐟𝐮𝐥𝐥 𝐫𝐚𝐧𝐠𝐞 (Cups, Bags, Foil, etc). Are you involved with {{Company}} supply?</pre>
-                <button class="copy-button" data-target="script1_4" data-original-text="复制 - 强调DDP省大钱">复制 - 强调DDP省大钱</button>
+                <pre class="text-to-copy" id="script1_4">Hi there, — Miles from NABAFOOD (LA). LA & NJ Stock ready for Soup Bowls, Hinged, Gloves. We also do Custom Branding & DDP delivered (factory-direct savings) for the full range (Bowls, Cups, Bags, Foil). Are you involved with {{Company}} supply?</pre>
+                <button class="copy-button" data-target="script1_4" data-original-text="复制 - 强调全品类定制+DDP">复制 - 强调全品类定制+DDP</button>
                 <span class="copy-message" data-msg-for="script1_4"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script1_5">Hi team — Miles from NABAFOOD (LA). We supply disposable packaging with local stock (Bowls, Hinged, Gloves) and DDP delivered options (factory-direct to save shipping) for all product lines (Cups, Foil Products, Bags). May I share the catalog? Who is the best contact?</pre>
-                <button class="copy-button" data-target="script1_5" data-original-text="复制 - 针对团队/含省运费点">复制 - 针对团队/含省运费点</button>
+                <pre class="text-to-copy" id="script1_5">Hi team — Miles from NABAFOOD (LA). We supply disposable packaging with local stock (Bowls, Hinged, Gloves) and Custom / DDP delivered options (factory-direct to save shipping) for all product lines (Bowls, Cups, Foil, Bags). May I share the catalog?</pre>
+                <button class="copy-button" data-target="script1_5" data-original-text="复制 - 针对团队/全线覆盖">复制 - 针对团队/全线覆盖</button>
                 <span class="copy-message" data-msg-for="script1_5"></span>
             </div>
         </div>
 
         <div class="script-section">
             <h3 id="toc-scene2">场景 2: 首次接触 (针对团队)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：向公司的通用邮箱或团队发送消息时使用。</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_1_team">Hi team — Miles from NABAFOOD (LA). We offer LA & NJ Stock for fast dispatch (Soup Bowls, Hinged Containers, Gloves, Chopsticks) and DDP delivered services (factory-direct to save freight) for your full packaging needs (incl. Cups, Bags, Foil, etc.). May I share the catalog?</pre>
-                <button class="copy-button" data-target="script2_1_team" data-original-text="复制 - 针对团队/分类明确">复制 - 针对团队/分类明确</button>
+                <pre class="text-to-copy" id="script2_1_team">Hi team — Miles from NABAFOOD (LA). We offer LA & NJ Stock for fast dispatch (Bowls, Hinged, Gloves) and Custom / DDP delivered services (factory-direct savings) for your full packaging needs (Bowls, Cups, Bags, Foil). May I share the catalog?</pre>
+                <button class="copy-button" data-target="script2_1_team" data-original-text="复制 - 针对团队/全覆盖">复制 - 针对团队/全覆盖</button>
                 <span class="copy-message" data-msg-for="script2_1_team"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_2_team">Hi {{Company}} Team — Miles from NABAFOOD here. We are a US-based supplier (LA & NJ warehouses) offering Ready Stock for core items and DDP delivered (factory-direct to save costs) for all categories (Cups, Foil, Paper Bags). Could you direct me to the person in charge?</pre>
+                <pre class="text-to-copy" id="script2_2_team">Hi {{Company}} Team — Miles from NABAFOOD here. We have Ready Stock for core items and Custom / DDP delivered options (factory-direct to save freight) for all categories (Bowls, Cups, Foil, Paper Bags). Could you direct me to the person in charge?</pre>
                 <button class="copy-button" data-target="script2_2_team" data-original-text="复制 - 针对团队/节省成本">复制 - 针对团队/节省成本</button>
                 <span class="copy-message" data-msg-for="script2_2_team"></span>
             </div>
@@ -298,85 +117,79 @@
 
         <div class="script-section">
             <h3 id="toc-scene3">场景 3: 首次接触 (Cold Outreach - 主动报价)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：已确认是负责人，或需要发起报价请求。</p>
-            
             <h4>常规开场 (General Openers)</h4>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_1">Hi — Miles from NABAFOOD (LA). We stock Soup Bowls, Hinged Containers, Gloves & Chopsticks in LA/NJ for fast restocks. We also quote DDP delivered (factory-direct to save freight) for all categories (Cups, Paper Bags, Foil, etc.). May I send our catalog and pricing?</pre>
-                <button class="copy-button" data-target="script2_1" data-original-text="复制 - 简短推目录(Stock+省运费)">复制 - 简短推目录(Stock+省运费)</button>
+                <pre class="text-to-copy" id="script2_1">Hi — Miles from NABAFOOD (LA). We stock Soup Bowls, Hinged, Gloves in LA/NJ for fast restocks. We also do Custom Branding and DDP delivered (save freight) for all categories (Bowls, Cups, Paper Bags, Foil). May I send pricing?</pre>
+                <button class="copy-button" data-target="script2_1" data-original-text="复制 - 简短(Stock+全品类DDP)">复制 - 简短(Stock+全品类DDP)</button>
                 <span class="copy-message" data-msg-for="script2_1"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_2">Hi, thanks for connecting. This is Miles from NABAFOOD (LA). We have ready stock in LA & NJ (Bowls, Hinged, Gloves, Chopsticks) and handle DDP delivered (factory-direct to cut shipping costs) for the full range (Foil, Cups, Bags, etc.). May I share the catalog?</pre>
-                <button class="copy-button" data-target="script2_2" data-original-text="复制 - 推目录/Cut Shipping Costs">复制 - 推目录/Cut Shipping Costs</button>
+                <pre class="text-to-copy" id="script2_2">Hi, thanks for connecting. Miles from NABAFOOD (LA). We have ready stock (Bowls, Hinged, Gloves) and handle Custom / DDP delivered orders (factory-direct savings) for the full range (Bowls, Foil, Cups, Bags). May I share the catalog?</pre>
+                <button class="copy-button" data-target="script2_2" data-original-text="复制 - 推目录/全品类">复制 - 推目录/全品类</button>
                 <span class="copy-message" data-msg-for="script2_2"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script2_3">Hi — Miles from NABAFOOD (LA). We stock core items locally (Bowls, Hinged, Gloves) and offer DDP delivered (factory-direct to save freight) for all categories (incl. Cups, Bags, Foil Products). Could I send our catalog and price list for you to compare?</pre>
-                <button class="copy-button" data-target="script2_3" data-original-text="复制 - 引导比价(含省运费)">复制 - 引导比价(含省运费)</button>
+                <pre class="text-to-copy" id="script2_3">Hi — Miles from NABAFOOD (LA). We stock core items locally (Bowls, Hinged, Gloves) and offer Custom / DDP delivered (factory-direct to save freight) for all categories (Bowls, Cups, Bags, Foil). Could I send our catalog to compare?</pre>
+                <button class="copy-button" data-target="script2_3" data-original-text="复制 - 引导比价(全能力)">复制 - 引导比价(全能力)</button>
                 <span class="copy-message" data-msg-for="script2_3"></span>
             </div>
 
-            <h4>早安系列开场 (Morning / Good Morning Openers) - 新增</h4>
+            <h4>早安系列开场 (Morning / Good Morning Openers)</h4>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_1">Morning — Miles here with NABAFOOD. We carry Soup Bowls, Hinged Containers, Gloves & Chopsticks in LA/NJ stock. We also offer DDP delivered (factory-direct to save freight) for all categories (Cups, Foil, Paper Bags). Can I send our catalog?</pre>
-                <button class="copy-button" data-target="script3_m_1" data-original-text="复制 - Morning/省运费提及">复制 - Morning/省运费提及</button>
+                <pre class="text-to-copy" id="script3_m_1">Morning — Miles here with NABAFOOD. We carry Soup Bowls, Hinged, Gloves in LA/NJ stock. We also handle Custom orders and DDP delivered (factory-direct savings) for all categories (Bowls, Cups, Foil, Bags). Can I send our catalog?</pre>
+                <button class="copy-button" data-target="script3_m_1" data-original-text="复制 - Morning/全品类能力">复制 - Morning/全品类能力</button>
                 <span class="copy-message" data-msg-for="script3_m_1"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_2">Good morning, this is Miles from NABAFOOD. We support ready inventory in LA/NJ (Bowls, Hinged, Gloves) and DDP delivered (factory-direct to cut costs) for the full range (Cups, Foil, Bags, etc.). Would you like me to share the catalog?</pre>
-                <button class="copy-button" data-target="script3_m_2" data-original-text="复制 - Good morning/Cut Costs">复制 - Good morning/Cut Costs</button>
+                <pre class="text-to-copy" id="script3_m_2">Good morning, this is Miles from NABAFOOD. We support ready inventory (Bowls, Hinged, Gloves) and Custom / DDP delivered options (factory-direct to cut costs) for the full range (Bowls, Cups, Foil, Bags). Would you like the catalog?</pre>
+                <button class="copy-button" data-target="script3_m_2" data-original-text="复制 - Good morning/省钱定制">复制 - Good morning/省钱定制</button>
                 <span class="copy-message" data-msg-for="script3_m_2"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_3">Hi, Miles from NABAFOOD here — morning. We keep essentials stocked in LA & NJ (Bowls, Hinged, Gloves, Chopsticks) and handle DDP delivered (factory-direct to save freight) for all categories (Cups, Paper Bags, Foil Products). May I send over our pricing for a quick comparison?</pre>
+                <pre class="text-to-copy" id="script3_m_3">Hi, Miles from NABAFOOD here — morning. We keep essentials stocked in LA & NJ (Bowls, Hinged, Gloves) and handle Custom / DDP delivered (factory-direct to save freight) for all categories (Bowls, Cups, Bags, Foil). May I send pricing?</pre>
                 <button class="copy-button" data-target="script3_m_3" data-original-text="复制 - Hi Morning/Save Freight">复制 - Hi Morning/Save Freight</button>
                 <span class="copy-message" data-msg-for="script3_m_3"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_4">Good morning — I’m Miles with NABAFOOD. If you need fast restocks on Bowls or Hinged Containers, we have LA/NJ stock. We also do DDP delivered (factory-direct to save shipping) for all packaging items (Cups, Foil, Bags). Can I email our catalog?</pre>
-                <button class="copy-button" data-target="script3_m_4" data-original-text="复制 - Good morning/Save Shipping">复制 - Good morning/Save Shipping</button>
+                <pre class="text-to-copy" id="script3_m_4">Good morning — I’m Miles with NABAFOOD. Need fast restocks (Bowls, Hinged)? We have LA/NJ stock. Need Custom or DDP delivered (save shipping)? We do that for all packaging items (Bowls, Cups, Foil, Bags). Can I email our catalog?</pre>
+                <button class="copy-button" data-target="script3_m_4" data-original-text="复制 - Good morning/分类清晰">复制 - Good morning/分类清晰</button>
                 <span class="copy-message" data-msg-for="script3_m_4"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_5">Morning! Miles from NABAFOOD. We supply core items like Soup Bowls & Hinged Containers from LA/NJ stock. For the full line (Cups, Foil, Paper Bags, etc.), we offer DDP delivered (factory-direct to save freight). Is it OK if I send our catalog?</pre>
-                <button class="copy-button" data-target="script3_m_5" data-original-text="复制 - Morning!/Factory Direct">复制 - Morning!/Factory Direct</button>
+                <pre class="text-to-copy" id="script3_m_5">Morning! Miles from NABAFOOD. We supply core items from LA/NJ stock (Bowls, Hinged). For the full line (Bowls, Cups, Foil, Bags) or Custom branding, we offer DDP delivered (factory-direct savings). Is it OK if I send our catalog?</pre>
+                <button class="copy-button" data-target="script3_m_5" data-original-text="复制 - Morning!/Brand & DDP">复制 - Morning!/Brand & DDP</button>
                 <span class="copy-message" data-msg-for="script3_m_5"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_6">Hi, good morning — Miles at NABAFOOD. We offer local stock (LA & NJ) for quick turns on Bowls, Hinged, Gloves, and Chopsticks. We also do DDP delivered (factory-direct to save costs) for all categories (Cups, Foil, Bags). Want me to share pricing?</pre>
+                <pre class="text-to-copy" id="script3_m_6">Hi, good morning — Miles at NABAFOOD. We offer local stock (LA & NJ) for quick turns on Bowls, Hinged, Gloves. We also do Custom / DDP delivered (save costs) for all categories (Bowls, Cups, Foil, Bags). Want pricing?</pre>
                 <button class="copy-button" data-target="script3_m_6" data-original-text="复制 - Hi Good morning/Save Costs">复制 - Hi Good morning/Save Costs</button>
                 <span class="copy-message" data-msg-for="script3_m_6"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_7">Good morning, this is Miles from NABAFOOD. We have inventory in LA & NJ (Bowls, Hinged, Gloves) for rapid replenishment and can handle DDP delivered (factory-direct to save freight) for all your needs (Cups, Paper Bags, Foil, etc.). Can I forward the list?</pre>
-                <button class="copy-button" data-target="script3_m_7" data-original-text="复制 - Good morning/DDP省运费">复制 - Good morning/DDP省运费</button>
+                <pre class="text-to-copy" id="script3_m_7">Good morning, this is Miles from NABAFOOD. We have stock in LA & NJ (Bowls, Hinged, Gloves) and can handle Custom / DDP delivered (factory-direct to save freight) for all your needs (Bowls, Cups, Foil, Bags). Can I forward the list?</pre>
+                <button class="copy-button" data-target="script3_m_7" data-original-text="复制 - Good morning/全线DDP">复制 - Good morning/全线DDP</button>
                 <span class="copy-message" data-msg-for="script3_m_7"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_8">Morning — Miles from NABAFOOD here. We ship Soup Bowls, Hinged Containers, Gloves & Chopsticks from LA/NJ stock. We also do DDP delivered (factory-direct to save shipping) for all product lines (incl. Cups, Bags, Foil). May I send you our catalog?</pre>
+                <pre class="text-to-copy" id="script3_m_8">Morning — Miles from NABAFOOD here. We ship Bowls, Hinged, Gloves from LA/NJ stock. We also do Custom / DDP delivered (factory-direct savings) for all product lines (Bowls, Cups, Bags, Foil). May I send you our catalog?</pre>
                 <button class="copy-button" data-target="script3_m_8" data-original-text="复制 - Morning/直发省钱">复制 - Morning/直发省钱</button>
                 <span class="copy-message" data-msg-for="script3_m_8"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_9">Hi, good morning. Miles with NABAFOOD. Comparing suppliers? We have ready stock (Bowls, Hinged, Gloves) in LA/NJ and competitive DDP delivered pricing (factory-direct to save freight) for all categories (Cups, Foil, Paper Bags, etc.). Should I send it over?</pre>
-                <button class="copy-button" data-target="script3_m_9" data-original-text="复制 - Hi Good morning/Competitive DDP">复制 - Hi Good morning/Competitive DDP</button>
+                <pre class="text-to-copy" id="script3_m_9">Hi, good morning. Miles with NABAFOOD. Comparing suppliers? We have ready stock (Bowls, Hinged, Gloves) and competitive Custom / DDP delivered pricing (save freight) for all categories (Bowls, Cups, Foil, Bags). Should I send it over?</pre>
+                <button class="copy-button" data-target="script3_m_9" data-original-text="复制 - Hi Good morning/Competitve">复制 - Hi Good morning/Competitve</button>
                 <span class="copy-message" data-msg-for="script3_m_9"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script3_m_10">Good morning — this is Miles from NABAFOOD. We keep key items stocked in LA & NJ (Bowls, Hinged Containers, Gloves, Chopsticks) and offer DDP delivered (factory-direct to save freight) for the full line (Cups, Foil, Bags). Would you like the catalog and price list?</pre>
-                <button class="copy-button" data-target="script3_m_10" data-original-text="复制 - Good morning/Full Line Savings">复制 - Good morning/Full Line Savings</button>
+                <pre class="text-to-copy" id="script3_m_10">Good morning — this is Miles from NABAFOOD. We keep key items stocked in LA & NJ (Bowls, Hinged, Gloves) and offer Custom / DDP delivered (factory-direct to save freight) for the full line (Bowls, Cups, Foil, Bags). Catalog?</pre>
+                <button class="copy-button" data-target="script3_m_10" data-original-text="复制 - Good morning/Full Line">复制 - Good morning/Full Line</button>
                 <span class="copy-message" data-msg-for="script3_m_10"></span>
             </div>
         </div>
         
         <div class="script-section">
             <h3 id="toc-scene4">场景 4: 首次接触后跟进 (客户未回复)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：发了第一条消息介绍公司后，客户没回，还没发目录。目标：**争取客户同意在WhatsApp接收目录/报价。**</p>
-            
             <h4>类型 A: 极简提醒 (Ultra-short & Casual)</h4>
-            <p style="color: #888; font-size: 12px;">这几条假设对方只是太忙没看到，语气最轻松，适合手机端。</p>
-
             <div class="copy-block">
                 <pre class="text-to-copy" id="script4_1">Hi [Name], just floating my last message to the top. Do you want me to send over our packaging catalog here?</pre>
                 <button class="copy-button" data-target="script4_1" data-original-text="复制 - 沉底捞起 (想要目录吗?)">复制 - 沉底捞起 (想要目录吗?)</button>
@@ -414,8 +227,6 @@
             </div>
 
             <h4>类型 B: 价值钩子 (Stock & Speed Hooks)</h4>
-            <p style="color: #888; font-size: 12px;">重申“双仓”和“现货”优势，给客户一个回复的理由。</p>
-
             <div class="copy-block">
                 <pre class="text-to-copy" id="script4_8">Hi, even if you have a main supplier, it doesn't hurt to have a US-based backup (LA & NJ stock). Worth a quick look at our catalog?</pre>
                 <button class="copy-button" data-target="script4_8" data-original-text="复制 - 备胎策略 (Backup Supplier)">复制 - 备胎策略 (Backup Supplier)</button>
@@ -442,14 +253,12 @@
                 <span class="copy-message" data-msg-for="script4_12"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script4_13">Hi, in case you missed it: We do DDP delivered (factory-direct to save freight) for all categories (Cups, Bags, Foil, etc.) AND have ready stock (LA & NJ) for essentials. Can I share the brochure?</pre>
-                <button class="copy-button" data-target="script4_13" data-original-text="复制 - DDP省运费+现货">复制 - DDP省运费+现货</button>
+                <pre class="text-to-copy" id="script4_13">Hi, in case you missed it: We do Custom / DDP delivered (factory-direct to save freight) for all categories (Bowls, Cups, Bags, Foil) AND have ready stock (LA & NJ). Can I share the brochure?</pre>
+                <button class="copy-button" data-target="script4_13" data-original-text="复制 - DDP/Custom+现货">复制 - DDP/Custom+现货</button>
                 <span class="copy-message" data-msg-for="script4_13"></span>
             </div>
 
             <h4>类型 C: 降低门槛/同理心 (Low Friction & Empathy)</h4>
-            <p style="color: #888; font-size: 12px;">理解对方忙，或者提供更简单的选项（如只要热销单、看样品）。</p>
-
             <div class="copy-block">
                 <pre class="text-to-copy" id="script4_14">Hi [Name], I assume you're busy, but I didn't want you to miss out on our LA & NJ stock list. Can I send it here?</pre>
                 <button class="copy-button" data-target="script4_14" data-original-text="复制 - 理解忙碌 (I assume you're busy)">复制 - 理解忙碌 (I assume you're busy)</button>
@@ -489,27 +298,25 @@
 
         <div class="script-section">
             <h3 id="toc-scene5">场景 5: 发送目录 (Sending Catalog)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：客户对首次接触有兴趣，回复了您，您现在发送产品目录。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script5_1_new">Hi there, I’ve attached our product catalog (Stock & Custom capabilities). We ship from LA & NJ for fast delivery. May I know how to address you? Which city/state are you based in?</pre>
                 <button class="copy-button" data-target="script5_1_new" data-original-text="复制 - 附目录/问地址(提及双仓)">复制 - 附目录/问地址(提及双仓)</button>
                 <span class="copy-message" data-msg-for="script5_1_new"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script5_2_catalog">Hi — sharing our Product Catalog (PDF), the hot-selling SKUs price list and To Go Container List here. These are our best sellers stocked in LA & NJ. If you’re interested in DDP delivered (factory-direct to save freight) for any items (incl. Cups, Foil, Bags), I can quote those separately.</pre>
-                <button class="copy-button" data-target="script5_2_catalog" data-original-text="复制 - 发目录(含省运费DDP)">复制 - 发目录(含省运费DDP)</button>
+                <pre class="text-to-copy" id="script5_2_catalog">Hi — sharing our Product Catalog (PDF), the hot-selling SKUs price list and To Go Container List here. These are our best sellers stocked in LA & NJ. If you’re interested in Custom / DDP delivered (factory-direct to save freight) for any item (Bowls, Cups, Foil, Bags), I can quote those separately.</pre>
+                <button class="copy-button" data-target="script5_2_catalog" data-original-text="复制 - 发目录(含定制/DDP)">复制 - 发目录(含定制/DDP)</button>
                 <span class="copy-message" data-msg-for="script5_2_catalog"></span>
             </div>
         </div>
         
         <div class="script-section">
             <h3 id="toc-scene6">场景 6: 目录跟进 (Catalog Follow-up)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：发送目录后客户未回复，跟进以推动到报价或样品阶段。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script6_1_followup">Hi — did you get our catalog? Share your city/state and I'll send pricing for best-sellers.
 
 Notes: 
-• Stock Min 1 pallet/SKU. DDP delivered (factory-direct) orders discussed separately.
+• Stock Min 1 pallet/SKU. Custom / DDP delivered (factory-direct) orders discussed separately.
 • Stock Locations: Los Angeles & New Jersey.
 • Terms: Payment in advance; freight collect.</pre>
                 <button class="copy-button" data-target="script6_1_followup" data-original-text="复制 - 确认收到/索取地址(含NJ)">复制 - 确认收到/索取地址(含NJ)</button>
@@ -527,23 +334,20 @@ A quick reply would be appreciated—thank you.</pre>
 
         <div class="script-section">
             <h3 id="toc-scene7">场景 7: 发送报价 (Sending Quotation)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：客户明确询问价格，或目录跟进后发送具体报价单。</p>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script7_1_quote">Hi — updated hot-sellers price sheet attached (LA & NJ Stock). If you’re interested in DDP delivered (factory-direct to save freight) Pricing for any items (incl. Cups, Bags, Foil), please message me.</pre>
+                <pre class="text-to-copy" id="script7_1_quote">Hi — updated hot-sellers price sheet attached (LA & NJ Stock). If you’re interested in Custom / DDP delivered (factory-direct to save freight) Pricing for any items (Bowls, Cups, Bags, Foil), please message me.</pre>
                 <button class="copy-button" data-target="script7_1_quote" data-original-text="复制 - 附热销价格表">复制 - 附热销价格表</button>
                 <span class="copy-message" data-msg-for="script7_1_quote"></span>
             </div>
             <div class="copy-block">
-                <pre class="text-to-copy" id="script7_2_quote">Hi, attached is our updated pricing for hot movers (Hinged Containers, Soup Bowls, Gloves, Chopsticks). DDP delivered (factory-direct to cut shipping costs) quotes for all categories (Cups, Foil, Paper Bags, etc.) available upon request. Happy to help anytime.</pre>
-                <button class="copy-button" data-target="script7_2_quote" data-original-text="复制 - 附核心产品报价(含省运费)">复制 - 附核心产品报价(含省运费)</button>
+                <pre class="text-to-copy" id="script7_2_quote">Hi, attached is our updated pricing for hot movers (Hinged Containers, Soup Bowls, Gloves, Chopsticks). Custom / DDP delivered (factory-direct to cut shipping costs) quotes for all categories (Bowls, Cups, Foil, Paper Bags, etc.) available upon request. Happy to help anytime.</pre>
+                <button class="copy-button" data-target="script7_2_quote" data-original-text="复制 - 附核心产品报价(含定制)">复制 - 附核心产品报价(含定制)</button>
                 <span class="copy-message" data-msg-for="script7_2_quote"></span>
             </div>
         </div>
 
-        <!-- NEW SCENE ADDED HERE -->
         <div class="script-section">
             <h3 id="toc-scene7b">场景 7+: 定制产品宣传 (Custom Pre-booking)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：向客户推广整柜定制预定 (DDP条款)，强调航运紧张和工厂排期。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script7b_1">Hi, quick note — we’re opening pre-bookings for disposable food packaging (All categories: gloves, cups & lids, Hinged Containers, foil pans, soup bowls, cutlery/napkins). With the Asia shipping rush, factory space is tight; DDP delivered to your warehouse (factory-direct to save freight) is about 45–60 days, MOQ one 40' HQ container. If you’d like, I can work out DDP delivered / Custom pricing for the SKUs you use most — should I put a quote together?</pre>
                 <button class="copy-button" data-target="script7b_1" data-original-text="复制 - 定制预定(含省运费)">复制 - 定制预定(含省运费)</button>
@@ -553,7 +357,6 @@ A quick reply would be appreciated—thank you.</pre>
 
         <div class="script-section">
             <h3 id="toc-scene8">场景 8: 报价跟进 (Quote Follow-up)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：发送报价后客户未回复，跟进询问反馈或下单意向。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script8_1_quote_fu">Just checking if you had a chance to review our price. If you’re interested, and share your company business license, I can send you samples.</pre>
                 <button class="copy-button" data-target="script8_1_quote_fu" data-original-text="复制 - 跟进价格/提供样品">复制 - 跟进价格/提供样品</button>
@@ -593,7 +396,6 @@ A quick reply would be appreciated—thank you.</pre>
         
         <div class="script-section">
              <h3 id="toc-scene9">场景 9: 回复价格异议 (Price Objection)</h3>
-             <p style="color: #666; font-style: italic;">使用场景：专门用于处理客户关于价格太高的回复。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script9_1_price">Hi — thanks for the reply.
 Could you let me know which specific items (SKU/size) look high on your side?
@@ -625,7 +427,6 @@ Thanks again, and have a great day!</pre>
         
         <div class="script-section">
              <h3 id="toc-scene10">场景 10: 回复业务/条款 (Business Q&A)</h3>
-             <p style="color: #666; font-style: italic;">使用场景: 回复关于定制、条款等具体业务问题。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script10_1_qa">Yes, we accept Custom Orders / Private Label (Logo printing, custom sizes). We also keep LA & NJ stock for quick top-ups (Inventory: Soup bowls, Hinged Containers, Gloves, Chopsticks). What kind of customization are you looking for?</pre>
                 <button class="copy-button" data-target="script10_1_qa" data-original-text="复制 - 接受定制/贴牌+双仓现货">复制 - 接受定制/贴牌+双仓现货</button>
@@ -640,7 +441,6 @@ Thanks again, and have a great day!</pre>
         
         <div class="script-section">
             <h3 id="toc-scene11">场景 11: 交易条款 (Trading Terms)</h3>
-            <p style="color: #666; font-style: italic;">使用场景: 用于发送详细的、逐条的交易条款。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script8_1_term">Pricing: USD; EXW Commerce, CA.</pre>
                 <button class="copy-button" data-target="script8_1_term" data-original-text="复制 - 条款 (价格)">复制 - 条款 (价格)</button>
@@ -690,7 +490,6 @@ Thanks again, and have a great day!</pre>
         
         <div class="script-section">
              <h3 id="toc-scene12">场景 12: 特殊情景回复 (Situational)</h3>
-             <p style="color: #666; font-style: italic;">使用场景: 针对特定情景（如未接来电）的回复。</p>
             <div class="copy-block">
                 <pre class="text-to-copy" id="script6_2_qa">Hi, May I know how to address you? — Miles from NABAFOOD (LA). We keep LA & NJ stock (Soup Bowls, Hinged Containers, etc.) and do custom orders. May I send our catalog and pricing? Which city/state are you based in?</pre>
                 <button class="copy-button" data-target="script6_2_qa" data-original-text="复制 - 针对Whatsapp/未接来电">复制 - 针对Whatsapp/未接来电</button>
@@ -699,19 +498,280 @@ Thanks again, and have a great day!</pre>
         </div>
 
         <div class="script-section">
-            <h3 id="toc-scene23">场景 23: 邮件开发 - 首次联系 (Cold Email - Stock & Custom)</h3>
-            <p style="color: #666; font-style: italic;">使用场景：向潜在客户发送正式的开发邮件，强调现货+定制双重优势。**已更新：强调 LA & NJ 双仓**</p>
+            <h3 id="toc-scene13">场景 13: 感谢回复 (Thank You)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script7_1">Hi — thanks for getting back to me.</pre>
+                <button class="copy-button" data-target="script7_1" data-original-text="复制 - 感谢回复">复制 - 感谢回复</button>
+                <span class="copy-message" data-msg-for="script7_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script7_2">Hi — appreciate the update.</pre>
+                <button class="copy-button" data-target="script7_2" data-original-text="复制 - 感谢更新">复制 - 感谢更新</button>
+                <span class="copy-message" data-msg-for="script7_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script7_3">Hi — thanks for the candid feedback.</pre>
+                <button class="copy-button" data-target="script7_3" data-original-text="复制 - 感谢坦诚反馈">复制 - 感谢坦诚反馈</button>
+                <span class="copy-message" data-msg-for="script7_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script7_4">Got it, thank you.</pre>
+                <button class="copy-button" data-target="script7_4" data-original-text="复制 - 收到,谢谢">复制 - 收到,谢谢</button>
+                <span class="copy-message" data-msg-for="script7_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script7_5">This is very helpful. Thank you.</pre>
+                <button class="copy-button" data-target="script7_5" data-original-text="复制 - 很有帮助,谢谢">复制 - 很有帮助,谢谢</button>
+                <span class="copy-message" data-msg-for="script7_5"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script7_6">Thanks for the quick reply.</pre>
+                <button class="copy-button" data-target="script7_6" data-original-text="复制 - 感谢快速回复">复制 - 感谢快速回复</button>
+                <span class="copy-message" data-msg-for="script7_6"></span>
+            </div>
+        </div>
 
+        <div class="script-section">
+            <h3 id="toc-scene14">场景 14: 希望得到回复 (Seeking Reply)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_1">Looking forward to hearing from you.</pre>
+                <button class="copy-button" data-target="script8_1" data-original-text="复制 - 期待回复">复制 - 期待回复</button>
+                <span class="copy-message" data-msg-for="script8_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_2">Let me know what you think.</pre>
+                <button class="copy-button" data-target="script8_2" data-original-text="复制 - 告诉我你的想法">复制 - 告诉我你的想法</button>
+                <span class="copy-message" data-msg-for="script8_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_3">What are your thoughts on this?</pre>
+                <button class="copy-button" data-target="script8_3" data-original-text="复制 - 你怎么看?">复制 - 你怎么看?</button>
+                <span class="copy-message" data-msg-for="script8_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_4">Please let me know if you have any questions.</pre>
+                <button class="copy-button" data-target="script8_4" data-original-text="复制 - 如有疑问请告知">复制 - 如有疑问请告知</button>
+                <span class="copy-message" data-msg-for="script8_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_5">Does this sound good?</pre>
+                <button class="copy-button" data-target="script8_5" data-original-text="复制 - 这样可以吗?">复制 - 这样可以吗?</button>
+                <span class="copy-message" data-msg-for="script8_5"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script8_6">Any feedback would be appreciated.</pre>
+                <button class="copy-button" data-target="script8_6" data-original-text="复制 - 期待反馈">复制 - 期待反馈</button>
+                <span class="copy-message" data-msg-for="script8_6"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene15">场景 15: 结尾祝福 (Closings)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script9_1">Best regards,</pre>
+                <button class="copy-button" data-target="script9_1" data-original-text="复制 - Best regards,">复制 - Best regards,</button>
+                <span class="copy-message" data-msg-for="script9_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script9_2">Talk soon,</pre>
+                <button class="copy-button" data-target="script9_2" data-original-text="复制 - Talk soon,">复制 - Talk soon,</button>
+                <span class="copy-message" data-msg-for="script9_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script9_3">Have a great day.</pre>
+                <button class="copy-button" data-target="script9_3" data-original-text="复制 - 祝你一天愉快">复制 - 祝你一天愉快</button>
+                <span class="copy-message" data-msg-for="script9_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script9_4">Have a great rest of your day.</pre>
+                <button class="copy-button" data-target="script9_4" data-original-text="复制 - 祝你今天剩余时间愉快">复制 - 祝你今天剩余时间愉快</button>
+                <span class="copy-message" data-msg-for="script9_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script9_5">Have a great weekend.</pre>
+                <button class="copy-button" data-target="script9_5" data-original-text="复制 - 祝你周末愉快">复制 - 祝你周末愉快</button>
+                <span class="copy-message" data-msg-for="script9_5"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene16">场景 16: 通用/联系方式</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script10_1">You can reach me at:
+Email: miles@hkranye.com
+WhatsApp: +19412039997 (https://wa.me/message/2GMCBP74ZIDGA1)
+IG: @miles_huang_ (https://instagram.com/_u/miles_huang_)
+FB: mileshuang666 (https://facebook.com/mileshuang666)
+</pre>
+                <button class="copy-button" data-target="script10_1" data-original-text="复制 - 通用联系方式 (全)">复制 - 通用联系方式 (全)</button>
+                <span class="copy-message" data-msg-for="script10_1"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene17">场景 17: 询问月销量 (Asking Volume)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script11_1">What is your estimated monthly sales volume for this product?</pre>
+                <button class="copy-button" data-target="script11_1" data-original-text="复制 - 标准询问月销量">复制 - 标准询问月销量</button>
+                <span class="copy-message" data-msg-for="script11_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script11_2">Could you share a rough estimate of your monthly volume for this item?</pre>
+                <button class="copy-button" data-target="script11_2" data-original-text="复制 - 委婉询问大概用量">复制 - 委婉询问大概用量</button>
+                <span class="copy-message" data-msg-for="script11_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script11_3">About how many units do you typically move per month?</pre>
+                <button class="copy-button" data-target="script11_3" data-original-text="复制 - 问批发商走货量">复制 - 问批发商走货量</button>
+                <span class="copy-message" data-msg-for="script11_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script11_4">What kind of monthly quantity are you anticipating?</pre>
+                <button class="copy-button" data-target="script11_4" data-original-text="复制 - 询问预期月采购量">复制 - 询问预期月采购量</button>
+                <span class="copy-message" data-msg-for="script11_4"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene18">场景 18: 回复不用客气 (You're Welcome)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script12_2">Happy to help.</pre>
+                <button class="copy-button" data-target="script12_2" data-original-text="复制 - 乐意效劳">复制 - 乐意效劳</button>
+                <span class="copy-message" data-msg-for="script12_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script12_3">No problem at all.</pre>
+                <button class="copy-button" data-target="script12_3" data-original-text="复制 - 没问题">复制 - 没问题</button>
+                <span class="copy-message" data-msg-for="script12_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script12_4">My pleasure.</pre>
+                <button class="copy-button" data-target="script12_4" data-original-text="复制 - 我的荣幸">复制 - 我的荣幸</button>
+                <span class="copy-message" data-msg-for="script12_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script12_5">Anytime.</pre>
+                <button class="copy-button" data-target="script12_5" data-original-text="复制 - 随时为您服务">复制 - 随时为您服务</button>
+                <span class="copy-message" data-msg-for="script12_5"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script12_6">Glad I could help.</pre>
+                <button class="copy-button" data-target="script12_6" data-original-text="复制 - 很高兴能帮上忙">复制 - 很高兴能帮上忙</button>
+                <span class="copy-message" data-msg-for="script12_6"></span>
+            </div>
+        </div>
+        
+        <div class="script-section">
+            <h3 id="toc-scene19">场景 19: 重新激活 (发送新目录)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script13_1">Hi [Name] — quick follow-up. Here’s our latest product catalog. If you need sizes, stock status (LA & NJ), or pricing, I’m happy to help anytime.</pre>
+                <button class="copy-button" data-target="script13_1" data-original-text="复制 - 快速跟进(附目录)">复制 - 快速跟进(附目录)</button>
+                <span class="copy-message" data-msg-for="script13_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script13_2">Hi [Name], sending our latest catalog. If any items catch your eye, just tell me and I’ll assist with details or pricing.</pre>
+                <button class="copy-button" data-target="script13_2" data-original-text="复制 - 发送新目录">复制 - 发送新目录</button>
+                <span class="copy-message" data-msg-for="script13_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script13_3">Hi [Name] — hope you’re doing well. Sharing our latest product catalog here. If anything looks relevant, I’m here to help with specs, availability, or pricing anytime.</pre>
+                <button class="copy-button" data-target="script13_3" data-original-text="复制 - 问候并分享目录">复制 - 问候并分享目录</button>
+                <span class="copy-message" data-msg-for="script13_3"></span>
+            </div>
+        </div>
+        
+        <div class="script-section">
+            <h3 id="toc-scene20">场景 20: 回复客户拒绝 (Rejection)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script17_1">Thanks for the candid reply. If you ever need peak-season top-ups or overflow coverage from our LA or NJ warehouses, feel free to message me anytime. Wishing you a smooth season.</pre>
+                <button class="copy-button" data-target="script17_1" data-original-text="复制 - 感谢回复/旺季补货">复制 - 感谢回复/旺季补货</button>
+                <span class="copy-message" data-msg-for="script17_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script17_2">Appreciate you letting me know. We'll be here in LA & NJ if you ever get into a bind and need fast, last-minute stock (MOQ $1000). All the best.</pre>
+                <button class="copy-button" data-target="script17_2" data-original-text="复制 - 感谢告知/紧急补货">复制 - 感谢告知/紧急补货</button>
+                <span class="copy-message" data-msg-for="script17_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script17_3">Understood, thanks for the update. If your main supplier ever runs low, keep in mind we offer low MOQ ($1000) trial orders from our LA/NJ stock for quick top-ups. Wish you the best.</pre>
+                <button class="copy-button" data-target="script17_3" data-original-text="复制 - 感谢更新/低MOQ试单">复制 - 感谢更新/低MOQ试单</button>
+                <span class="copy-message" data-msg-for="script17_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script17_4">No problem at all, thanks for the clear reply. Feel free to reach out if you ever need emergency stock for Soup Bowls or MFPP Clamshells from our US warehouses (LA/NJ). Take care.</pre>
+                <button class="copy-button" data-target="script17_4" data-original-text="复制 - 感谢答复/应急库存">复制 - 感谢答复/应急库存</button>
+                <span class="copy-message" data-msg-for="script17_4"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene21">场景 21: 样品签收跟进 (Sample Follow-up)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script21_1">Hi [Name], tracking shows your samples have been delivered. Did you receive the package? After you review the samples, any feedback or questions, feel free to let me know. By the way, we have an office in City of Industry (~30 min away). If convenient, we can meet and arrange a warehouse visit.</pre>
+                <button class="copy-button" data-target="script21_1" data-original-text="复制 - 标准跟进(指定句式)">复制 - 标准跟进(指定句式)</button>
+                <span class="copy-message" data-msg-for="script21_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script21_2">Hi [Name], looks like the samples arrived! Did you get them? Once you've had a look, I'd love to hear your thoughts or answer any questions. Since we're neighbors in the City of Industry (about 30 mins out), feel free to stop by for a warehouse tour if you're in the area.</pre>
+                <button class="copy-button" data-target="script21_2" data-original-text="复制 - 轻松语气(改写版)">复制 - 轻松语气(改写版)</button>
+                <span class="copy-message" data-msg-for="script21_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script21_3">Good morning [Name], just checking in as tracking shows delivered. Please confirm if you received the package. We value your feedback—please let us know if the quality meets your requirements. Our facility is conveniently located in the City of Industry. We would be delighted to host you for a meeting and warehouse tour at your convenience.</pre>
+                <button class="copy-button" data-target="script21_3" data-original-text="复制 - 正式商务(改写版)">复制 - 正式商务(改写版)</button>
+                <span class="copy-message" data-msg-for="script21_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script21_4">Hi [Name], the samples should be with you now (tracking shows delivered). Did they arrive safely? Can't wait to hear what you think! Let me know if they meet your expectations. We're just a short drive away in the City of Industry (~30 mins). Come say hi! We can show you around the warehouse anytime.</pre>
+                <button class="copy-button" data-target="script21_4" data-original-text="复制 - 热情邀约(改写版)">复制 - 热情邀约(改写版)</button>
+                <span class="copy-message" data-msg-for="script21_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script21_5">Samples delivered! Please let me know if you got them. Any initial thoughts? We are local (City of Industry). If you have time, come visit our warehouse to see the full range!</pre>
+                <button class="copy-button" data-target="script21_5" data-original-text="复制 - 简短有力(改写版)">复制 - 简短有力(改写版)</button>
+                <span class="copy-message" data-msg-for="script21_5"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene22">场景 22: 客户见面安排 (Meeting Logistics & Care)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script23_1">Hi  — office info:
+Contact: Winson Yang · +1 626 620 6168
+Address: 17870 Castleton Street Ste 126, City of Industry, CA 91748
+
+When would you like to visit? Please let me know in advance and I’ll arrange for Winson to host you.</pre>
+                <button class="copy-button" data-target="script23_1" data-original-text="复制 - 提供地址/预约时间">复制 - 提供地址/预约时间</button>
+                <span class="copy-message" data-msg-for="script23_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script23_2">Hi,
+
+My colleague Winson will be there to receive you. If you need anything on the way, you can reach him at +1 626 620 6168.
+
+See you there!</pre>
+                <button class="copy-button" data-target="script23_2" data-original-text="复制 - 出发前关怀">复制 - 出发前关怀</button>
+                <span class="copy-message" data-msg-for="script23_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script23_3">Hi [Name],
+
+Hope your drive back went smoothly. Thanks again for coming by today — if any questions come up while you’re thinking about the order details, just message me anytime.</pre>
+                <button class="copy-button" data-target="script23_3" data-original-text="复制 - 见面后跟进">复制 - 见面后跟进</button>
+                <span class="copy-message" data-msg-for="script23_3"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene23">场景 23: 邮件开发 - 首次联系 (Cold Email - Stock & Custom)</h3>
             <div class="email-container">
                 <h5>1. 标准商务 (Standard Business)</h5>
-                
                 <span class="email-label">邮件主题 (Subject):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_1_subj">Supply Inquiry: Disposable Packaging (Dual Warehouse Stock & Custom Options)</pre>
                     <button class="copy-button" data-target="script22_1_subj" data-original-text="复制主题">复制主题</button>
                     <span class="copy-message" data-msg-for="script22_1_subj"></span>
                 </div>
-
                 <span class="email-label">邮件正文 (Body):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_1_body">Hi there,
@@ -722,7 +782,7 @@ This is Miles from NABAFOOD (LA & NJ). We specialize in disposable food-service 
 
 If you need fast restocks, I can send our catalog of stock items (Soup Bowls, Hinged Containers, Gloves, Chopsticks). We cover both East and West Coasts efficiently.
 
-For DDP delivered / Custom projects (factory-direct to save shipping on all categories incl. Cups, Bags, Foil, etc.), please share your specs or photos. We can review and provide a competitive quote.
+For Custom Branding or DDP delivered projects (factory-direct to save shipping on all categories incl. Cups, Bags, Foil, etc.), please share your specs or photos. We can review and provide a competitive quote.
 
 Best regards,
 Miles</pre>
@@ -733,21 +793,19 @@ Miles</pre>
 
             <div class="email-container">
                 <h5>2. 开门见山 (Direct & Benefit-Led)</h5>
-                
                 <span class="email-label">邮件主题 (Subject):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_2_subj">Better Packaging Supply: LA + NJ Stock & Private Label</pre>
                     <button class="copy-button" data-target="script22_2_subj" data-original-text="复制主题">复制主题</button>
                     <span class="copy-message" data-msg-for="script22_2_subj"></span>
                 </div>
-
                 <span class="email-label">邮件正文 (Body):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_2_body">Hi there,
 
 Looking for a reliable packaging partner? At NABAFOOD, we offer the best of both worlds:
 1. Fast Stock (LA & NJ): Immediate dispatch for Soup Bowls, Hinged Containers, Gloves, and Chopsticks.
-2. DDP delivered / Custom: Factory-direct pricing to save on freight for the full range (Cups, Paper Bags, Foil, Deli Containers).
+2. Custom / DDP delivered: Factory-direct pricing to save on freight for the full range (Cups, Paper Bags, Foil, Deli Containers) and Custom Branding.
 
 Where are you based? I can send our stock catalog or a custom quote based on your needs.
 
@@ -760,21 +818,19 @@ Miles (NABAFOOD)</pre>
 
             <div class="email-container">
                 <h5>3. 侧重现货优势 (Stock Focus)</h5>
-                
                 <span class="email-label">邮件主题 (Subject):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_3_subj">Need faster turnaround on Soup Bowls/Clamshells? (LA & NJ Stock)</pre>
                     <button class="copy-button" data-target="script22_3_subj" data-original-text="复制主题">复制主题</button>
                     <span class="copy-message" data-msg-for="script22_3_subj"></span>
                 </div>
-
                 <span class="email-label">邮件正文 (Body):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_3_body">Hi,
 
 Do you need quicker turnaround on your packaging? We keep ready stock in both Los Angeles and New Jersey for Soup Bowls, Hinged Containers, and Gloves.
 
-We also support DDP delivered / Custom production (factory-direct) for the broader range (Cups, Bags, Foil).
+We also support Custom Branding and DDP delivered production (factory-direct) for the broader range (Cups, Bags, Foil).
 
 Let me know your location, and I’ll share the catalog/pricing.
 
@@ -787,19 +843,17 @@ Miles</pre>
 
             <div class="email-container">
                 <h5>4. 侧重定制能力 (Custom Focus)</h5>
-                
                 <span class="email-label">邮件主题 (Subject):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_4_subj">Private Label Packaging Services (Custom Print & Sizes)</pre>
                     <button class="copy-button" data-target="script22_4_subj" data-original-text="复制主题">复制主题</button>
                     <span class="copy-message" data-msg-for="script22_4_subj"></span>
                 </div>
-
                 <span class="email-label">邮件正文 (Body):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_4_body">Hi there,
 
-Miles here from NABAFOOD. If you are looking for custom-branded packaging (Private Label) or DDP delivered solutions (factory-direct to save shipping) for Cups, Bags, or Foil Products, we can help. Please share your specs or photos for a quote.
+Miles here from NABAFOOD. If you are looking for Custom-branded packaging (Private Label) or DDP delivered solutions (factory-direct to save shipping) for Cups, Bags, or Foil Products, we can help. Please share your specs or photos for a quote.
 
 We also maintain large inventory in LA & NJ for immediate needs (Bowls, Hinged, Gloves).
 
@@ -814,21 +868,19 @@ Miles</pre>
 
             <div class="email-container">
                 <h5>5. 简短有力 (Concise / Mobile Friendly)</h5>
-                
                 <span class="email-label">邮件主题 (Subject):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_5_subj">Quick question: Stock vs Custom Packaging</pre>
                     <button class="copy-button" data-target="script22_5_subj" data-original-text="复制主题">复制主题</button>
                     <span class="copy-message" data-msg-for="script22_5_subj"></span>
                 </div>
-
                 <span class="email-label">邮件正文 (Body):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_5_body">Hi,
 
 NABAFOOD here. We supply disposable packaging with two options:
 1. Ready Stock (LA & NJ Warehouses): Soup Bowls, Hinged Containers, Gloves, Chopsticks.
-2. DDP delivered / Custom: Full range factory-direct to save freight (Cups, Bags, Foil, etc.).
+2. Custom / DDP delivered: Full range factory-direct to save freight (Cups, Bags, Foil, etc.) and Custom Branding.
 
 Interested? Let me know your location, and I’ll share the catalog/pricing.
 
@@ -841,21 +893,19 @@ Miles</pre>
 
             <div class="email-container">
                 <h5>6. 柔性询问 (Soft Ask)</h5>
-                
                 <span class="email-label">邮件主题 (Subject):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_6_subj">A backup option for your packaging needs</pre>
                     <button class="copy-button" data-target="script22_6_subj" data-original-text="复制主题">复制主题</button>
                     <span class="copy-message" data-msg-for="script22_6_subj"></span>
                 </div>
-
                 <span class="email-label">邮件正文 (Body):</span>
                 <div class="copy-block">
                     <pre class="text-to-copy" id="script22_6_body">Hi there,
 
 Hope you’re having a good week.
 
-Just reaching out to see if you need a backup supplier for packaging. We have stock in LA & NJ for quick top-ups (Bowls, Hinged, Gloves) and can also handle your DDP delivered / Custom orders to save freight on Cups, Bags, and Foil.
+Just reaching out to see if you need a backup supplier for packaging. We have stock in LA & NJ for quick top-ups (Bowls, Hinged, Gloves) and can also handle your Custom Branding and DDP delivered orders to save freight on Cups, Bags, and Foil.
 
 If you’re open to comparing prices, feel free to send over your current specs or ask for our stock list.
 
@@ -867,6 +917,245 @@ Miles</pre>
             </div>
         </div>
 
+        <div class="script-section">
+            <h3 id="toc-scene24">场景 24: 节日祝福 - 感恩节 (Holiday Greetings - Thanksgiving)</h3>
+            <h4>板块 A：致合作伙伴/成交客户 (To Existing Clients)</h4>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_1">Wishing you a wonderful Thanksgiving! We sincerely appreciate your partnership and the opportunity to work with you this year. – Miles, NABAFOOD (LA/NJ)</pre>
+                <button class="copy-button" data-target="script24_1" data-original-text="复制 - 感恩节(标准商务)">复制 - 感恩节(标准商务)</button>
+                <span class="copy-message" data-msg-for="script24_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_2">From all of us at NABAFOOD, we wish you and your team a happy and restful Thanksgiving. Thank you for your continued trust and support. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_2" data-original-text="复制 - 感恩节(团队名义)">复制 - 感恩节(团队名义)</button>
+                <span class="copy-message" data-msg-for="script24_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_3">Happy Thanksgiving! Grateful for your business and wishing you a great holiday ahead. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_3" data-original-text="复制 - 感恩节(简洁版)">复制 - 感恩节(简洁版)</button>
+                <span class="copy-message" data-msg-for="script24_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_4">Wishing you a relaxing Thanksgiving filled with good food and great company. Enjoy the well-deserved break! – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_4" data-original-text="复制 - 感恩节(温馨关怀)">复制 - 感恩节(温馨关怀)</button>
+                <span class="copy-message" data-msg-for="script24_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_5">Thank you for being a valued customer. Wishing you a joyous Thanksgiving and a successful year ahead. – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script24_5" data-original-text="复制 - 感恩节(展望未来)">复制 - 感恩节(展望未来)</button>
+                <span class="copy-message" data-msg-for="script24_5"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_6">Just a quick note to say thank you for your support. Wishing you a safe and happy Thanksgiving. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_6" data-original-text="复制 - 感恩节(简短致谢)">复制 - 感恩节(简短致谢)</button>
+                <span class="copy-message" data-msg-for="script24_6"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_7">At this time of gratitude, we pause to thank you for being an essential part of our journey. Happy Thanksgiving! – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script24_7" data-original-text="复制 - 感恩节(强调感恩)">复制 - 感恩节(强调感恩)</button>
+                <span class="copy-message" data-msg-for="script24_7"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_8">Wishing you abundance, joy, and peace this Thanksgiving. Have a wonderful time with family and friends. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_8" data-original-text="复制 - 感恩节(通用祝福)">复制 - 感恩节(通用祝福)</button>
+                <span class="copy-message" data-msg-for="script24_8"></span>
+            </div>
+
+            <h4>板块 B：致潜在客户/初次联系 (To Prospects)</h4>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_9">Happy Thanksgiving! Just wanted to reach out and wish you a wonderful holiday. Hope we have the chance to connect in the future. – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script24_9" data-original-text="复制 - 潜在客户(建立联系)">复制 - 潜在客户(建立联系)</button>
+                <span class="copy-message" data-msg-for="script24_9"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_10">Wishing you a happy and restful Thanksgiving. We look forward to the possibility of supporting your business in the coming year. – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script24_10" data-original-text="复制 - 潜在客户(展望合作)">复制 - 潜在客户(展望合作)</button>
+                <span class="copy-message" data-msg-for="script24_10"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_11">Sending you warm wishes for a Happy Thanksgiving! May your holiday be filled with joy and success. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_11" data-original-text="复制 - 潜在客户(纯粹祝福)">复制 - 潜在客户(纯粹祝福)</button>
+                <span class="copy-message" data-msg-for="script24_11"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_12">Happy Thanksgiving! Wishing you a well-deserved break and a successful holiday season ahead. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_12" data-original-text="复制 - 潜在客户(旺季关怀)">复制 - 潜在客户(旺季关怀)</button>
+                <span class="copy-message" data-msg-for="script24_12"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_13">Happy Thanksgiving from your friends at NABAFOOD (LA & NJ)! Wishing you a great holiday. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_13" data-original-text="复制 - 潜在客户(朋友问候)">复制 - 潜在客户(朋友问候)</button>
+                <span class="copy-message" data-msg-for="script24_13"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_14">Happy Thanksgiving! I appreciate our recent connection and wish you a wonderful holiday season. – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script24_14" data-original-text="复制 - 潜在客户(感谢联系)">复制 - 潜在客户(感谢联系)</button>
+                <span class="copy-message" data-msg-for="script24_14"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_15">Wishing you a Thanksgiving full of great food and happy customers! Enjoy the holiday. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_15" data-original-text="复制 - 潜在客户(美食与客户)">复制 - 潜在客户(美食与客户)</button>
+                <span class="copy-message" data-msg-for="script24_15"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_16">Just dropping a quick note to wish you a Happy Thanksgiving! Best to you and your team. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_16" data-original-text="复制 - 潜在客户(简短问候)">复制 - 潜在客户(简短问候)</button>
+                <span class="copy-message" data-msg-for="script24_16"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_17">Happy Thanksgiving! Wishing you the best for the rest of the year. Hope to chat again soon. – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script24_17" data-original-text="复制 - 潜在客户(祝愿年终)">复制 - 潜在客户(祝愿年终)</button>
+                <span class="copy-message" data-msg-for="script24_17"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script24_18">Warmest wishes for a happy Thanksgiving. Hope you enjoy a safe and restful break. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script24_18" data-original-text="复制 - 潜在客户(温馨平安)">复制 - 潜在客户(温馨平安)</button>
+                <span class="copy-message" data-msg-for="script24_18"></span>
+            </div>
+        </div>
+        
+        <div class="script-section">
+            <h3 id="toc-scene25">场景 25: 节后开场 - 感恩节后 (Post-Thanksgiving Openers)</h3>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script25_1_open">I hope you had a wonderful Thanksgiving holiday.</pre>
+                <button class="copy-button" data-target="script25_1_open" data-original-text="复制 - 通用(Wonderful Holiday)">复制 - 通用(Wonderful Holiday)</button>
+                <span class="copy-message" data-msg-for="script25_1_open"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script25_2_open">I hope you enjoyed a pleasant Thanksgiving break.</pre>
+                <button class="copy-button" data-target="script25_2_open" data-original-text="复制 - 通用(Pleasant Break)">复制 - 通用(Pleasant Break)</button>
+                <span class="copy-message" data-msg-for="script25_2_open"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script25_3_open">I hope you had a lovely Thanksgiving with your family and friends.</pre>
+                <button class="copy-button" data-target="script25_3_open" data-original-text="复制 - 亲切(Family & Friends)">复制 - 亲切(Family & Friends)</button>
+                <span class="copy-message" data-msg-for="script25_3_open"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script25_4_open">I hope you enjoyed a restful and happy Thanksgiving.</pre>
+                <button class="copy-button" data-target="script25_4_open" data-original-text="复制 - 亲切(Restful & Happy)">复制 - 亲切(Restful & Happy)</button>
+                <span class="copy-message" data-msg-for="script25_4_open"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script25_5_open">Trust you had a great Thanksgiving.</pre>
+                <button class="copy-button" data-target="script25_5_open" data-original-text="复制 - 简洁(Trust you had...)">复制 - 简洁(Trust you had...)</button>
+                <span class="copy-message" data-msg-for="script25_5_open"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script25_6_open">Hope you had a nice holiday break.</pre>
+                <button class="copy-button" data-target="script25_6_open" data-original-text="复制 - 简洁(Nice Holiday)">复制 - 简洁(Nice Holiday)</button>
+                <span class="copy-message" data-msg-for="script25_6_open"></span>
+            </div>
+        </div>
+
+        <div class="script-section">
+            <h3 id="toc-scene26">场景 26: 节日祝福 - 圣诞与新年 (Christmas & New Year)</h3>
+            <h4 style="margin-top: 25px; border-top: 1px dashed #ccc; padding-top: 15px;">板块 A：圣诞与综合问候 (Christmas & General Greetings)</h4>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_1">This is Miles from NABAFOOD (LA & NJ) wishing you a Merry Christmas! It was great connecting with you this year, and I look forward to potentially working together in 2026.</pre>
+                <button class="copy-button" data-target="script26_1" data-original-text="复制 - 建立联系(期待明年合作)">复制 - 建立联系(期待明年合作)</button>
+                <span class="copy-message" data-msg-for="script26_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_2">Merry Christmas! Miles here from NABAFOOD—just wanted to send my best wishes. Hope 2026 brings us the chance to collaborate on your packaging needs.</pre>
+                <button class="copy-button" data-target="script26_2" data-original-text="复制 - 轻松问候(寻找机会)">复制 - 轻松问候(寻找机会)</button>
+                <span class="copy-message" data-msg-for="script26_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_3">Season's Greetings from Miles at NABAFOOD! Hope you have a restful break. We're ready to support your stock (LA & NJ) or custom projects whenever you're ready in the New Year.</pre>
+                <button class="copy-button" data-target="script26_3" data-original-text="复制 - 假期关怀(随时待命)">复制 - 假期关怀(随时待命)</button>
+                <span class="copy-message" data-msg-for="script26_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_4">Appreciate our conversations this year. Miles here wishing you a Merry Christmas and a successful start to 2026! Hope to be of service soon.</pre>
+                <button class="copy-button" data-target="script26_4" data-original-text="复制 - 感谢沟通(希望能服务)">复制 - 感谢沟通(希望能服务)</button>
+                <span class="copy-message" data-msg-for="script26_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_5">Happy Holidays from NABAFOOD (LA & NJ)! Miles here. Just a quick note to wish you well. Keep us in mind for any quick restocks next year!</pre>
+                <button class="copy-button" data-target="script26_5" data-original-text="复制 - 简短提醒(记住我们)">复制 - 简短提醒(记住我们)</button>
+                <span class="copy-message" data-msg-for="script26_5"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_6">Miles from NABAFOOD here. Wishing you a Happy New Year! Excited about the possibility of becoming a trusted partner for your business in 2026.</pre>
+                <button class="copy-button" data-target="script26_6" data-original-text="复制 - 新年展望(成为伙伴)">复制 - 新年展望(成为伙伴)</button>
+                <span class="copy-message" data-msg-for="script26_6"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_7">Merry Christmas & Happy New Year! Hope it’s a prosperous one. Miles here—looking forward to picking up our conversation after the holidays.</pre>
+                <button class="copy-button" data-target="script26_7" data-original-text="复制 - 节后继续(保持沟通)">复制 - 节后继续(保持沟通)</button>
+                <span class="copy-message" data-msg-for="script26_7"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_8">Sending warm wishes for the holiday season! Hope you enjoy the time off with family. Best, Miles (NABAFOOD).</pre>
+                <button class="copy-button" data-target="script26_8" data-original-text="复制 - 纯粹祝福(家庭时光)">复制 - 纯粹祝福(家庭时光)</button>
+                <span class="copy-message" data-msg-for="script26_8"></span>
+            </div>
+
+            <h4 style="margin-top: 25px; border-top: 1px dashed #ccc; padding-top: 15px;">新增：新年纯祝福 - 潜客专用 (New Year Greetings for Prospects)</h4>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_1">Wishing you a happy and prosperous 2026! May this year bring you new opportunities and great success. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script26_new_1" data-original-text="复制 - 新年(繁荣与机遇)">复制 - 新年(繁荣与机遇)</button>
+                <span class="copy-message" data-msg-for="script26_new_1"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_2">Happy New Year! Wishing you and your team a wonderful year ahead filled with growth and achievement. Best wishes from all of us at NABAFOOD.</pre>
+                <button class="copy-button" data-target="script26_new_2" data-original-text="复制 - 新年(团队与成长)">复制 - 新年(团队与成长)</button>
+                <span class="copy-message" data-msg-for="script26_new_2"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_3">Just wanted to reach out and wish you a very Happy New Year. Hope 2026 is your best year yet! – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script26_new_3" data-original-text="复制 - 新年(最棒的一年)">复制 - 新年(最棒的一年)</button>
+                <span class="copy-message" data-msg-for="script26_new_3"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_4">Happy 2026! Wishing you good health, happiness, and success in all your ventures this year. Warm regards, Miles (NABAFOOD).</pre>
+                <button class="copy-button" data-target="script26_new_4" data-original-text="复制 - 新年(健康与幸福)">复制 - 新年(健康与幸福)</button>
+                <span class="copy-message" data-msg-for="script26_new_4"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_5">Cheers to a fresh start! Wishing you a bright and successful New Year. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script26_new_5" data-original-text="复制 - 新年(新的开始)">复制 - 新年(新的开始)</button>
+                <span class="copy-message" data-msg-for="script26_new_5"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_6">Happy New Year! May the coming year be full of grand adventures and opportunities. Best wishes from Miles at NABAFOOD.</pre>
+                <button class="copy-button" data-target="script26_new_6" data-original-text="复制 - 新年(冒险与机会)">复制 - 新年(冒险与机会)</button>
+                <span class="copy-message" data-msg-for="script26_new_6"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_7">Sending you my best wishes for a happy and healthy New Year. Hope you had a great holiday season! – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script26_new_7" data-original-text="复制 - 新年(健康快乐)">复制 - 新年(健康快乐)</button>
+                <span class="copy-message" data-msg-for="script26_new_7"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_8">Happy New Year! Wishing you a season of joy and looking forward to what 2026 brings. – Miles, NABAFOOD (LA & NJ)</pre>
+                <button class="copy-button" data-target="script26_new_8" data-original-text="复制 - 新年(期待未来)">复制 - 新年(期待未来)</button>
+                <span class="copy-message" data-msg-for="script26_new_8"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_9">Just a quick note to say Happy New Year! Wishing you peace, love, and laughter in 2026. – Miles</pre>
+                <button class="copy-button" data-target="script26_new_9" data-original-text="复制 - 新年(平和与欢笑)">复制 - 新年(平和与欢笑)</button>
+                <span class="copy-message" data-msg-for="script26_new_9"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_new_10">Happy New Year! Wishing you a fantastic year ahead. – Miles, NABAFOOD</pre>
+                <button class="copy-button" data-target="script26_new_10" data-original-text="复制 - 新年(极简祝福)">复制 - 新年(极简祝福)</button>
+                <span class="copy-message" data-msg-for="script26_new_10"></span>
+            </div>
+
+            <h4 style="margin-top: 25px; border-top: 1px dashed #ccc; padding-top: 15px;">板块 B：致成交客户 (Existing Clients)</h4>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_9">This is Miles from NABAFOOD. Thank you for your business this year! Wishing you a Merry Christmas and a thriving New Year.</pre>
+                <button class="copy-button" data-target="script26_9" data-original-text="复制 - 感谢惠顾(标准版)">复制 - 感谢惠顾(标准版)</button>
+                <span class="copy-message" data-msg-for="script26_9"></span>
+            </div>
+            <div class="copy-block">
+                <pre class="text-to-copy" id="script26_10">Miles here—just wanted to say thanks for the support. Wishing you and your team a fantastic holiday break. Cheers to 2026!</pre>
+                <button class="copy-button" data-target="script26_10" data-original-text="复制 - 感谢支持(轻松版)">复制 - 感谢支持(轻松版)</button>
+                <span class="copy-message" data-msg-for="script26_10"></span>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -927,6 +1216,5 @@ Miles</pre>
             });
         });
     </script>
-
 </body>
 </html>
